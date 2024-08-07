@@ -58,10 +58,23 @@ export interface CompanyFactsJson {
                     if (!response.ok) {
                         throw new Error('response failed');
                     }
-                    const unparsedData = await response.json();
-                    data = JSON.parse(unparsedData);
+                    const data = await response.json();
+                    
 
-                    console.log(Array.fromAsync(data.facts.dei));
+                    const units = (Object.keys(data.facts));
+                    
+                    const tempArray = [];
+                    
+                    for (let i = 0; i < 2; i++) {
+                        const unitLabelObjs = Object.keys(data.facts[units[i]]);
+                        
+                        for (let j = 0; j < unitLabelObjs.length; j++) {
+                            
+                            tempArray.push(data.facts[units[i]][unitLabelObjs[j]].label);
+                        }
+                    };
+                    console.log(tempArray);
+                    console.log('async running');
                     setBars(Object.keys(data.facts.dei).map(fact => (
                         <div key={fact} onClick={() => clickReaction(Object.keys(fact)[0])}>
                             {factTemplate(Object.keys(fact)[0], fact[Object.keys(fact)[0]].description)}
@@ -78,7 +91,6 @@ export interface CompanyFactsJson {
             fetchData();
         }, ); 
     
-        console.log('Current bars:', bars);
     
         return (
             <div>
@@ -93,5 +105,5 @@ export default ScrollingFacts;
 
 
 
-
+//take object 
 
