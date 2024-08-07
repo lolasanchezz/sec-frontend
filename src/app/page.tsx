@@ -28,7 +28,7 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-     <ScrollingFacts data={companyFacts} clickReaction = {setFactClicked} className = {styles.ScrollingFacts}></ScrollingFacts>
+     <ScrollingFacts clickReaction = {setFactClicked} className = {styles.ScrollingFacts}></ScrollingFacts>
     </main>
   );
 }

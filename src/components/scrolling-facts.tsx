@@ -3,10 +3,16 @@
 
 import styles from "../app/page.module.css";
 import React, { useEffect, useState } from 'react';
-const factTemplate = (label: string, description: string) => {
+const FactTemplate: React.FC<{ label: string; description: string }> = ({ label, description }) => {
+    const [hovering,setHovering] = useState(false);
+
     return (
-        <div className = {styles.factTemplate}>
-            <h2>{label}</h2>
+        <div className = {styles.factTemplate} onMouseEnter = {() => {
+            setHovering(true);
+        }} onMouseLeave = {()=> {
+            setHovering(false);
+        }}>
+            <h1>{hovering ? description: label }</h1>
             </div>
     );
 };
@@ -37,59 +43,64 @@ export interface CompanyFactsJson {
         }
   };
 
-  interface objCompanyFacts {
-    'object': CompanyFactsJson;
-  }
+ 
   //actual exported component
   interface ScrollingFactsProps {
-    data: CompanyFactsJson;
     clickReaction: React.Dispatch<React.SetStateAction<string>>;
     className: string;
   }
 
-    const ScrollingFacts: React.FC<ScrollingFactsProps> = ({ data, clickReaction, className }) => {
+    const ScrollingFacts: React.FC<ScrollingFactsProps> = ({ clickReaction, className }) => {
         const [bars, setBars] = useState<JSX.Element[]>([]);
         const [dataStatus, setDataStatus] = useState('loading');
     
         useEffect(() => {
             const fetchData = async () => {
                 try {
+                    //data fetching (no editing!!)
                     const response = await fetch('http://localhost:3000/companyFacts/CIK0000812011');
                     if (!response.ok) {
                         throw new Error('response failed');
                     }
                     const data = await response.json();
                     
-
-                    const units = (Object.keys(data.facts));
-                    
-                    const tempArray = [];
+                    //turning data into useful array
+                    const units = (Object.keys(data.facts));   
+                    const labelArray = [];
+                    const descriptionArray: string[] = [];
                     
                     for (let i = 0; i < 2; i++) {
                         const unitLabelObjs = Object.keys(data.facts[units[i]]);
                         
                         for (let j = 0; j < unitLabelObjs.length; j++) {
                             
-                            tempArray.push(data.facts[units[i]][unitLabelObjs[j]].label);
+                            labelArray.push(data.facts[units[i]][unitLabelObjs[j]].label);
+                            descriptionArray.push(data.facts[units[i]][unitLabelObjs[j]].description);
                         }
-                    };
-                    console.log(tempArray);
+                    }
                     console.log('async running');
-                    setBars(Object.keys(data.facts.dei).map(fact => (
-                        <div key={fact} onClick={() => clickReaction(Object.keys(fact)[0])}>
-                            {factTemplate(Object.keys(fact)[0], fact[Object.keys(fact)[0]].description)}
+
+
+                    //turning array into jsx elements
+                    setBars(labelArray.map((fact, index) => (
+                        <div 
+                        key={fact} 
+                        onClick={() => clickReaction(fact)}
+                        >
+                            <FactTemplate label = {fact} description = {descriptionArray[index]}></FactTemplate>
                         </div>
                     )));
                     setDataStatus('ready');
+
                 } catch (error) {
                     console.error('Error fetching data:', error);
                 } finally {
                     console.log('Data fetching complete');
                 }
             };
-    
+    //run the api call
             fetchData();
-        }, ); 
+        }, []); 
     
     
         return (
