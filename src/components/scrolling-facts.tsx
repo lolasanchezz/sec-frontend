@@ -14,7 +14,7 @@ const factTemplate = (label: string, description: string) => {
 
 
 
-export interface companyFactsJson {
+export interface CompanyFactsJson {
     "cik": number;
     "entityName": string;
     "facts": {
@@ -40,10 +40,10 @@ export interface companyFactsJson {
 
   //actual exported component
 
-const ScrollingFacts = (data: companyFactsJson, clickReaction : React.Dispatch<React.SetStateAction<string>>) => {
-  
-useEffect(() => {
-    let bars = data.facts.dei.map(fact => (
+const ScrollingFacts = (data: CompanyFactsJson, clickReaction : React.Dispatch<React.SetStateAction<string>>) => {
+    let bars: JSX.Element[] = [];
+    useEffect(() => {
+     bars = data.facts.dei.map(fact => (
         <div key={fact.key.label} onClick={() => clickReaction(fact.key.label)}>
             {factTemplate(fact.key.label, fact.key.description)}
         </div>
@@ -57,14 +57,11 @@ console.log(data);
 const dataToShow = data.facts.dei;
 return (
     <div>
-            {(dataToShow as any[]).map(fact => (
-                <div key={fact.label} onClick={() => clickReaction(fact)}>
-                    {factTemplate(fact.label, fact.description)}
-                </div>
-            ))}
+            {bars}
         </div>
 )
 };
+
 export default ScrollingFacts;
 
 
