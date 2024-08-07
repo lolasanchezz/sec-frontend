@@ -8,34 +8,27 @@ import React, { useEffect, useState } from 'react';
 export default function Home() {
 
   interface objCompanyFacts {
-    "object": any;
+    'object': CompanyFactsJson;
   }
 
   const [factClicked, setFactClicked] = useState("");
   const [dataStatus, setDataStatus] = useState('loading');
-  const initObj : objCompanyFacts = { 'object': {}};
-  const [companyFacts, setCompanyFacts] = useState(initObj);
+  const [companyFacts, setCompanyFacts] = useState({} as CompanyFactsJson);
+  
+  
+
+
+  
+    console.log(companyFacts);
+
+ 
   useEffect(() => {
-
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/companyFacts/CIK0000812011');
-        setCompanyFacts({'object': (await response.json()) as CompanyFactsJson});
-        
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        setDataStatus('ready');
-        
-      }
-    };
-
-    fetchData();
-  }, []);
+    console.log('Updated companyFacts:', companyFacts);
+  }, [companyFacts]);
 
   return (
     <main className={styles.main}>
-     <ScrollingFacts data={companyFacts.object} clickReaction = {setFactClicked} className = {styles.ScrollingFacts}></ScrollingFacts>
+     <ScrollingFacts data={companyFacts} clickReaction = {setFactClicked} className = {styles.ScrollingFacts}></ScrollingFacts>
     </main>
   );
 }
