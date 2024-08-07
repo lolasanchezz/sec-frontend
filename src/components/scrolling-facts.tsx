@@ -56,12 +56,14 @@ export interface CompanyFactsJson {
                 try {
                     const response = await fetch('http://localhost:3000/companyFacts/CIK0000812011');
                     if (!response.ok) {
-                        throw new Error('Network response was not ok');
+                        throw new Error('response failed');
                     }
-                    const data = await response.json() as CompanyFactsJson;
-                    console.log(data.facts.dei);
-                    setBars(data.facts.dei.map(fact => (
-                        <div key={Object.keys(fact)[0]} onClick={() => clickReaction(Object.keys(fact)[0])}>
+                    const unparsedData = await response.json();
+                    data = JSON.parse(unparsedData);
+
+                    console.log(Array.fromAsync(data.facts.dei));
+                    setBars(Object.keys(data.facts.dei).map(fact => (
+                        <div key={fact} onClick={() => clickReaction(Object.keys(fact)[0])}>
                             {factTemplate(Object.keys(fact)[0], fact[Object.keys(fact)[0]].description)}
                         </div>
                     )));
@@ -74,7 +76,7 @@ export interface CompanyFactsJson {
             };
     
             fetchData();
-        }, [clickReaction]); // Adding clickReaction to the dependency array
+        }, ); 
     
         console.log('Current bars:', bars);
     
