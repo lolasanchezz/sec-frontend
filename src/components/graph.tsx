@@ -1,4 +1,5 @@
 import { Chart } from "react-google-charts";
+import styles from "../app/page.module.css";
 
 interface GraphProps {
     factClicked: string;
@@ -28,5 +29,15 @@ const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
 
 
 
-return();
+return(
+    <div className = {styles.graph}>
+    <Chart
+    chartType = "LineChart"
+    width = "500px"
+    height = "500px"
+    data = {graphData}
+    />
+    </div>
+);
 };
+export default Graph;
