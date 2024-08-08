@@ -1,3 +1,4 @@
+import { Chart } from "react-google-charts";
 
 interface GraphProps {
     factClicked: string;
@@ -14,5 +15,18 @@ interface GraphProps {
 };
 
 const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
+    let data: Array<[number, number]> = [[0, 0]];
+    for (let i = 0; i < dataSelected.length; i++){
+        let firstDataPoint = parseInt(dataSelected[i].filed);
+        data.push([firstDataPoint, dataSelected[i].val]);
+    }
+    data.shift();
+    const bars =  [['date filed', factClicked]];
+    const graphData = [bars, data];
 
+
+
+
+
+return();
 };
