@@ -19,7 +19,16 @@ const FactTemplate: React.FC<{ label: string; description: string }> = ({ label,
 };
 
 
-
+type passedDataPoints = Array<{
+    "end": string;
+    "val": number;
+    "accn": string;
+    "fy": number;
+    "fp:": string;
+    "form": string;
+    "filed": string;
+    "frame"?: string;
+  }>;
 
 export interface CompanyFactsJson {
     "cik": number;
@@ -49,10 +58,10 @@ export interface CompanyFactsJson {
   interface ScrollingFactsProps {
     clickReaction: React.Dispatch<React.SetStateAction<string>>;
     className: string;
-    dataSelectedFunc: React.Dispatch<React.SetStateAction<any>>;
+    dataSelectedFunc: React.Dispatch<React.SetStateAction<passedDataPoints>>;
   }
 
-    const ScrollingFacts: React.FC<ScrollingFactsProps> = ({ clickReaction, className }) => {
+    const ScrollingFacts: React.FC<ScrollingFactsProps> = ({ clickReaction, className, dataSelectedFunc }) => {
         const [bars, setBars] = useState<JSX.Element[]>([]);
         const [dataStatus, setDataStatus] = useState('loading');
     
@@ -87,10 +96,11 @@ export interface CompanyFactsJson {
                     setBars(labelArray.map((fact, index) => (
                         <div 
                         key={fact} 
-                        onClick={() => 
-                            //put all relevant data in a use state constant that can be used by the parent page
-                            clickReaction(fact)
-                            
+                        onClick={() => {
+                            clickReaction(fact); 
+                            const realUnit = Object.keys(data.facts.units)
+                            dataSelectedFunc(fact.units[realUnit[0]])
+                        }
                         }
                         className = {styles.barsContainer}>
                             <FactTemplate label = {fact} description = {descriptionArray[index]}></FactTemplate>
