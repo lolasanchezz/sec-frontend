@@ -4,6 +4,7 @@
 import styles from "../app/page.module.css";
 import React, { useEffect, useState } from 'react';
 const FactTemplate: React.FC<{ label: string; description: string }> = ({ label, description }) => {
+
     const [hovering,setHovering] = useState(false);
 
     return (
@@ -48,6 +49,7 @@ export interface CompanyFactsJson {
   interface ScrollingFactsProps {
     clickReaction: React.Dispatch<React.SetStateAction<string>>;
     className: string;
+    dataSelectedFunc: React.Dispatch<React.SetStateAction<any>>;
   }
 
     const ScrollingFacts: React.FC<ScrollingFactsProps> = ({ clickReaction, className }) => {
@@ -85,8 +87,12 @@ export interface CompanyFactsJson {
                     setBars(labelArray.map((fact, index) => (
                         <div 
                         key={fact} 
-                        onClick={() => clickReaction(fact)}
-                        >
+                        onClick={() => 
+                            //put all relevant data in a use state constant that can be used by the parent page
+                            clickReaction(fact)
+                            
+                        }
+                        className = {styles.barsContainer}>
                             <FactTemplate label = {fact} description = {descriptionArray[index]}></FactTemplate>
                         </div>
                     )));
@@ -104,7 +110,7 @@ export interface CompanyFactsJson {
     
     
         return (
-            <div>
+            <div className = {styles.barsWrapper}>
                 {bars}
             </div>
         );

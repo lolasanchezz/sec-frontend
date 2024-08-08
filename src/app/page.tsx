@@ -14,21 +14,13 @@ export default function Home() {
   const [factClicked, setFactClicked] = useState("");
   const [dataStatus, setDataStatus] = useState('loading');
   const [companyFacts, setCompanyFacts] = useState({} as CompanyFactsJson);
-  
-  
-
-
-  
-    console.log(companyFacts);
-
+  let [dataSelected, setDataSelected] = useState();
  
-  useEffect(() => {
-    console.log('Updated companyFacts:', companyFacts);
-  }, [companyFacts]);
+  
 
   return (
     <main className={styles.main}>
-     <ScrollingFacts clickReaction = {setFactClicked} className = {styles.ScrollingFacts}></ScrollingFacts>
+     <ScrollingFacts clickReaction = {setFactClicked} dataSelectedFunc = {setDataSelected} className = {styles.barsContainer}></ScrollingFacts>
     </main>
   );
 }

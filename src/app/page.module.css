@@ -4,12 +4,22 @@
     align-items: space-around;
     height: 100vh;
 }
-.ScrollingFacts {
+.factTemplate {
+   
+    
+    border: 5px solid rgba(0, 0, 0, 0);
+    padding: 2%;
+    font-size: 0.4rem;
+    color: rgb(255, 255, 255);
+    border: 0.05rem solid white;
+    
+}
+
+.barsWrapper {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    overflow: y-scroll;
     width: 50%;
+    overflow: clip;
+    padding: 5%;
+    
 }
