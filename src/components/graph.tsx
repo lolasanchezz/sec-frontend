@@ -42,12 +42,12 @@ const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
     const graphData = [bars, data];
     graphDataObj.data = graphData;
 
-    setDataObtained(true);
     }
     }, [dataSelected, factClicked]);
     if (dataObtained){
         const graphData = graphDataObj.data;
     };
+
 
 return(
 
@@ -57,7 +57,7 @@ return(
     width = "500px"
     height = "500px"
     data = {graphDataObj.data}
-    /> : <h1>loading</h1>}
+    /> : <h1></h1>}
     </div>
 );
 };

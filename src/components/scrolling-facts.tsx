@@ -33,24 +33,7 @@ type passedDataPoints = Array<{
 export interface CompanyFactsJson {
     "cik": number;
     "entityName": string;
-    "facts": {
-        "dei": Array<{
-                [key: string]: {
-                "label": string;
-                "description": string;
-                "units": Record<string, {
-                    "end": string;
-                    "val": number;
-                    "accn": string;
-                    "fy": number;
-                    "fp:": string;
-                    "form": string;
-                    "filed": string;
-                    "frame"?: string;
-                }>;
-                }
-            }>;
-        }
+    "facts": any;
   };
 
  
@@ -69,7 +52,7 @@ export interface CompanyFactsJson {
             const fetchData = async () => {
                 try {
                     //data fetching (no editing!!)
-                    const response = await fetch('http://localhost:3000/companyFacts/CIK0000812011');
+                    const response = await fetch('http://localhost:3000/companyFacts/CIK0001018724');
                     if (!response.ok) {
                         throw new Error('response failed');
                     }
@@ -79,27 +62,30 @@ export interface CompanyFactsJson {
                     const units = (Object.keys(data.facts));   
                     const labelArray = [];
                     const descriptionArray: string[] = [];
+                    const correspondingUnit: string[] = [];
+                    let formalLabelObjs: string[] = [];
                     
-                    for (let i = 0; i < 2; i++) {
-                        const unitLabelObjs = Object.keys(data.facts[units[i]]);
+                    for (let i = 0; i < (units.length); i++) {
+                         formalLabelObjs = Object.keys(data.facts[units[i]]);
                         
-                        for (let j = 0; j < unitLabelObjs.length; j++) {
-                            
-                            labelArray.push(data.facts[units[i]][unitLabelObjs[j]].label);
-                            descriptionArray.push(data.facts[units[i]][unitLabelObjs[j]].description);
+                        for (let j = 0; j < formalLabelObjs.length; j++) {
+                            correspondingUnit.push(units[i]);
+                            labelArray.push(data.facts[units[i]][formalLabelObjs[j]].label);
+                            descriptionArray.push(data.facts[units[i]][formalLabelObjs[j]].description);
                         }
                     }
                     console.log('async running');
-
-
+                    console.log(correspondingUnit);
                     //turning array into jsx elements
                     setBars(labelArray.map((fact, index) => (
                         <div 
                         key={fact} 
                         onClick={() => {
                             clickReaction(fact); 
-                            const realUnit = Object.keys(data.facts.units)
-                            dataSelectedFunc(fact.units[realUnit[0]])
+                            console.log(data.facts);
+                            const realUnit = Object.keys(data.facts)
+                            //pass in CIK here
+                            dataSelectedFunc(grabData(correspondingUnit[index], formalLabelObjs[index]))
                         }
                         }
                         className = {styles.barsContainer}>
@@ -118,6 +104,9 @@ export interface CompanyFactsJson {
             fetchData();
         }, []); 
     
+        const grabData = async(unit: string, label: string) => {
+            
+        }
     
         return (
             <div className = {styles.barsWrapper}>
