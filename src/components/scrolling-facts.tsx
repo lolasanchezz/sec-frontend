@@ -19,16 +19,7 @@ const FactTemplate: React.FC<{ label: string; description: string }> = ({ label,
 };
 
 
-type passedDataPoints = Array<{
-    "end": string;
-    "val": number;
-    "accn": string;
-    "fy": number;
-    "fp:": string;
-    "form": string;
-    "filed": string;
-    "frame"?: string;
-  }>;
+
 
 export interface CompanyFactsJson {
     "cik": number;
@@ -41,10 +32,11 @@ export interface CompanyFactsJson {
   interface ScrollingFactsProps {
     clickReaction: React.Dispatch<React.SetStateAction<string>>;
     className: string;
-    dataSelectedFunc: React.Dispatch<React.SetStateAction<passedDataPoints>>;
+    dataSelectedFunc: any;
+    giveLabels: any;
   }
 
-    const ScrollingFacts: React.FC<ScrollingFactsProps> = ({ clickReaction, className, dataSelectedFunc }) => {
+    const ScrollingFacts: React.FC<ScrollingFactsProps> = ({ clickReaction, className, dataSelectedFunc, giveLabels }) => {
         const [bars, setBars] = useState<JSX.Element[]>([]);
         const [dataStatus, setDataStatus] = useState('loading');
     
@@ -74,8 +66,7 @@ export interface CompanyFactsJson {
                             descriptionArray.push(data.facts[units[i]][formalLabelObjs[j]].description);
                         }
                     }
-                    console.log('async running');
-                    console.log(correspondingUnit);
+                    giveLabels(labelArray);
                     //turning array into jsx elements
                     setBars(labelArray.map((fact, index) => (
                         <div 
@@ -84,8 +75,9 @@ export interface CompanyFactsJson {
                             clickReaction(fact); 
                             console.log(data.facts);
                             const realUnit = Object.keys(data.facts)
-                            //pass in CIK here
-                            dataSelectedFunc(grabData(correspondingUnit[index], formalLabelObjs[index]))
+                            //pass in CIK here 
+                            const CIK = 'CIK0001018724';
+                            dataSelectedFunc(grabData(correspondingUnit[index], formalLabelObjs[index], CIK))
                         }
                         }
                         className = {styles.barsContainer}>
@@ -104,7 +96,19 @@ export interface CompanyFactsJson {
             fetchData();
         }, []); 
     
-        const grabData = async(unit: string, label: string) => {
+        const grabData = async(unit: string, label: string, CIK: string) => {
+            try {
+                const response = await fetch(`http://localhost:3000/companyFacts/${CIK}/${unit}/${label}.json`);
+                if (!response.ok) {
+                    throw new Error('response failed');
+                }
+                return response;
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                // TODO: put in graceful error handling with text showing up :)
+             } finally {
+                    console.log('Data fetching complete');
+                }
             
         }
     

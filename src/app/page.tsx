@@ -11,26 +11,18 @@ export default function Home() {
   interface objCompanyFacts {
     'object': CompanyFactsJson;
   }
-  type passedDataPoints = Array<{
-    "end": string;
-    "val": number;
-    "accn": string;
-    "fy": number;
-    "fp:": string;
-    "form": string;
-    "filed": string;
-    "frame"?: string;
-  }>;
+  type passedDataPoints = Array<any>;
 
   const [factClicked, setFactClicked] = useState("");
   const [dataStatus, setDataStatus] = useState('loading');
-  let [dataSelected, setDataSelected] = useState({} as passedDataPoints);
+  let [dataSelected, setDataSelected] = useState([] as Array<any>);
+  let [allLabels, setAllLabels] = useState([] as Array<string>);
  
   
 
   return (
     <main className={styles.main}>
-     <ScrollingFacts clickReaction = {setFactClicked} dataSelectedFunc = {setDataSelected} className = {styles.barsContainer}></ScrollingFacts>
+     <ScrollingFacts clickReaction = {setFactClicked} dataSelectedFunc = {setDataSelected} className = {styles.barsContainer} giveLabels = {setAllLabels}></ScrollingFacts>
      <Graph factClicked = {factClicked} dataSelected = {dataSelected}></Graph>
     </main>
   );

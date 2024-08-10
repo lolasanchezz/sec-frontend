@@ -34,3 +34,7 @@
     padding: 5%;
     
 }
+
+.searchbar {
+    display: flex;
+}
