@@ -82,6 +82,7 @@ export interface CompanyFactsJson {
                         <div 
                         key={fact} 
                         onClick={() => {
+                            
                             clickReaction(fact); 
                             console.log(data.facts);
                             const realUnit = Object.keys(data.facts)

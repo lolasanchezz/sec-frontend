@@ -15,7 +15,7 @@ export default function Home() {
 
   const [factClicked, setFactClicked] = useState("");
   const [dataStatus, setDataStatus] = useState('loading');
-  let [dataSelected, setDataSelected] = useState([] as Array<any>);
+  let [dataSelected, setDataSelected] = useState('' as any);
   let [allLabels, setAllLabels] = useState([] as Array<string>);
  
   

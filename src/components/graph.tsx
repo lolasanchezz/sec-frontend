@@ -7,20 +7,22 @@ import React, { useEffect, useState } from 'react';
 
 interface GraphProps {
     factClicked: string;
-    dataSelected: Array<any>;
+    dataSelected: any;
 };
-
+let finalData: any = [];
 const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
-    const graphDataObj: {"data": Array<any>} = {"data": []};
-   const [dataObtained, setDataObtained] = useState(false);
+
+
     useEffect(() => {
         
-        
-        if (dataSelected.length == undefined){
+        if ((typeof dataSelected === "undefined") || (factClicked === "")){
             console.log('returned');
              return;
         } else {
-    let data: Array<[number, number]> = [[0, 0]];
+            
+    //start to take data and put it together
+    let data: any = [];
+
     for (let i = 0; i < dataSelected.length; i++){
         let firstDataPoint = parseInt(dataSelected[i].filed);
         data.push([firstDataPoint, dataSelected[i].val]);
@@ -29,25 +31,29 @@ const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
     console.log(data);
     const bars =  [['date filed', factClicked]];
     const graphData = [bars, data];
-    graphDataObj.data = graphData;
-
+    finalData = graphData;
+    console.log(finalData);
+    console.log('ere');
     }
     }, [dataSelected, factClicked]);
-    if (dataObtained){
-        const graphData = graphDataObj.data;
-    };
+   
 
 
 return(
 
     <div className = {styles.graph}>
-  {dataObtained ?  <Chart
-    chartType = "LineChart"
+  {((typeof dataSelected === "undefined")||(factClicked == "")||(dataSelected ==='')) ?  
+ <h1>pick a topic!</h1> :
+  <Chart
+   chartType = "LineChart"
     width = "500px"
     height = "500px"
-    data = {graphDataObj.data}
-    /> : <h1></h1>}
-    </div>
+    data = {finalData}
+    /> 
+
+   
+  }
+   </div>
 );
 };
 export default Graph;
