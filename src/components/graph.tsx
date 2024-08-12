@@ -7,24 +7,15 @@ import React, { useEffect, useState } from 'react';
 
 interface GraphProps {
     factClicked: string;
-    dataSelected: Array<{
-        "end": string;
-        "val": number;
-        "accn": string;
-        "fy": number;
-        "fp:": string;
-        "form": string;
-        "filed": string;
-        "frame"?: string;
-      }>;
+    dataSelected: Array<any>;
 };
 
 const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
     const graphDataObj: {"data": Array<any>} = {"data": []};
    const [dataObtained, setDataObtained] = useState(false);
     useEffect(() => {
-        console.log(dataSelected.length);
-        console.log()
+        
+        
         if (dataSelected.length == undefined){
             console.log('returned');
              return;
@@ -32,8 +23,6 @@ const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
     let data: Array<[number, number]> = [[0, 0]];
     for (let i = 0; i < dataSelected.length; i++){
         let firstDataPoint = parseInt(dataSelected[i].filed);
-        console.log(firstDataPoint + 'e');
-        console.log('e');
         data.push([firstDataPoint, dataSelected[i].val]);
     }
     data.shift();

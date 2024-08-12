@@ -22,7 +22,7 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-     <ScrollingFacts clickReaction = {setFactClicked} dataSelectedFunc = {setDataSelected} className = {styles.barsContainer} giveLabels = {setAllLabels}></ScrollingFacts>
+     <ScrollingFacts clickReaction = {setFactClicked} dataSelectedFunc = {setDataSelected} className = {styles.barsContainer} giveLabels = {setAllLabels} dataSelected = {dataSelected}></ScrollingFacts>
      <Graph factClicked = {factClicked} dataSelected = {dataSelected}></Graph>
     </main>
   );
