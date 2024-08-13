@@ -38,7 +38,7 @@ const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
 return(
 
     <div className = {styles.graph}>
-  {((typeof dataSelected === "undefined")||(factClicked == "")||(dataSelected ==='')) ?  
+  {((typeof dataSelected === "undefined")||(factClicked == "")||(dataSelected ==='')||(!(finalData))) ?  
  <h1>pick a topic!</h1> :
   <Chart
    chartType = "LineChart"

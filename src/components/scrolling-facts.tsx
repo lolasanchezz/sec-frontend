@@ -7,7 +7,6 @@ import React, { useEffect, useState } from 'react';
 
 
 
-
 const FactTemplate: React.FC<{ label: string; description: string }> = ({ label, description }) => {
 
     const [hovering,setHovering] = useState(false);
@@ -66,6 +65,7 @@ export interface CompanyFactsJson {
                     const subCorrespondingUnit: string[] = [];
                     
                     for (let i = 0; i < (units.length); i++) {
+                        
                         if (Object.keys(data.facts[units[i]])){
                          formalLabelObjs = Object.keys(data.facts[units[i]]);
                          console.log(formalLabelObjs);
@@ -76,7 +76,7 @@ export interface CompanyFactsJson {
                         }
                         for (let j = 0; j < formalLabelObjs.length; j++) {
                             if (data.facts[units[i]][formalLabelObjs[j]].label) {
-                                
+                               
                                 correspondingUnit.push(units[i]);
                                 
                                 labelArray.push(data.facts[units[i]][formalLabelObjs[j]].label);
@@ -121,15 +121,8 @@ export interface CompanyFactsJson {
         }, []); 
     
         const grabData = (data: any, unit: string, label: string, subUnit: string ) => {
-            if (!data || !data.facts || !data.facts[unit] || !data.facts[unit][label] || !data.facts[unit][label].units) {
-                console.log(data.facts);
-                console.log(data.facts[unit]);
-                console.log(data.facts[unit][label]);
-                console.log(label);
-                console.log(data.facts[unit][label].units);
-                
-                return [];
-            }
+
+            
 
             let dataArray: any = [];
             const subUnitStr = Object.keys(subUnit);
