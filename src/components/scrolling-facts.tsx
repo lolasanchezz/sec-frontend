@@ -68,9 +68,9 @@ export interface CompanyFactsJson {
                         
                         if (Object.keys(data.facts[units[i]])){
                          formalLabelObjs = Object.keys(data.facts[units[i]]);
-                         console.log(formalLabelObjs);
+                      
                          finalLabelObjs = finalLabelObjs.concat(formalLabelObjs);
-                         console.log(finalLabelObjs);
+                         
                         } else {
                             console.log('found null');
                         }
@@ -98,7 +98,7 @@ export interface CompanyFactsJson {
                             
                              
                             clickReaction(data.facts[correspondingUnit[index]][finalLabelObjs[index]].label);
-                            
+                            console.log(data)
                             //pass in CIK here 
                             dataSelectedFunc(grabData(data, correspondingUnit[index], finalLabelObjs[index], subCorrespondingUnit[index]));
                             

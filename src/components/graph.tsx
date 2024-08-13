@@ -14,7 +14,14 @@ let data: any = [];
 
 const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
     const [finalData, setFinalData] = useState([]);
+    const [url, setUrl] = useState('');
 
+    
+
+
+
+
+    
     useEffect(() => {
         
         if ((typeof dataSelected === "undefined") || (!(factClicked))){
@@ -26,14 +33,21 @@ const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
     let data: any = [['date filed', factClicked]];
     
     for (let i = 0; i < dataSelected.length; i++){
-        //if "fy" is the same
+        if(dataSelected[i].fp === 'FY'){
+            continue;
+        }
         let firstDataPoint = parseInt(dataSelected[i].end);
         data.push([firstDataPoint, dataSelected[i].val]);
     }
-    console.log(data);
+    
     setFinalData(data);
-    console.log(finalData);
-    console.log('ran');
+    
+    const chartContainer = document.getElementById('chartDiv');
+    const chart = (chartContainer as any)._chart
+    const imgUri = chart.getImageURI();
+    setUrl(imgUri);
+
+
     }
     
     }, [dataSelected, factClicked]);
@@ -42,7 +56,7 @@ const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
 
 return(
 
-    <div className = {styles.graph}>
+    <div id = "chartDiv" className = {styles.graph}>
   {((typeof dataSelected === "undefined")||(factClicked === "")||(dataSelected ==='')||(!(data))) ?  
  <h1>pick a topic!</h1> :
   <Chart
@@ -51,9 +65,15 @@ return(
     height = "100%"
     data = {finalData}
     /> 
+   
+    
 
    
   }
+  {((typeof dataSelected === "undefined")||(factClicked === "")||(dataSelected ==='')||(!(data))) ?
+  <h1></h1>: 
+   <a href = {url}>download graph</a>
+}
    </div>
 );
 };
