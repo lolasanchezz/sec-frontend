@@ -21,19 +21,15 @@ const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
         } else {
             
     //start to take data and put it together
-    let data: any = [];
+    let data: any = [['date filed', factClicked]];
 
     for (let i = 0; i < dataSelected.length; i++){
-        let firstDataPoint = parseInt(dataSelected[i].filed);
+        //if "fy" is the same
+        let firstDataPoint = parseInt(dataSelected[i].end);
         data.push([firstDataPoint, dataSelected[i].val]);
     }
-    data.shift();
     console.log(data);
-    const bars =  [['date filed', factClicked]];
-    const graphData = [bars, data];
-    finalData = graphData;
-    console.log(finalData);
-    console.log('ere');
+    finalData = data;
     }
     }, [dataSelected, factClicked]);
    
@@ -46,8 +42,8 @@ return(
  <h1>pick a topic!</h1> :
   <Chart
    chartType = "LineChart"
-    width = "500px"
-    height = "500px"
+    width = "100%"
+    height = "100%"
     data = {finalData}
     /> 
 

@@ -54,24 +54,33 @@ export interface CompanyFactsJson {
                     if (!response.ok) {
                         throw new Error('response failed');
                     }
-                    const data = await response.json();
-                    
+                    const recievedData = await response.json();
+                    const data = recievedData;
                     //turning data into useful array
                     const units = (Object.keys(data.facts));   
-                    const labelArray = [];
+                    const labelArray: any[] = [];
                     const descriptionArray: string[] = [];
                     const correspondingUnit: string[] = [];
                     let formalLabelObjs: string[] = [];
                     const subCorrespondingUnit: string[] = [];
                     
                     for (let i = 0; i < (units.length); i++) {
+                        if (Object.keys(data.facts[units[i]])){
                          formalLabelObjs = Object.keys(data.facts[units[i]]);
-                        
+                         console.log('run');
+                        } else {
+                            console.log('found null');
+                        }
                         for (let j = 0; j < formalLabelObjs.length; j++) {
-                            correspondingUnit.push(units[i]);
-                            labelArray.push(data.facts[units[i]][formalLabelObjs[j]].label);
-                            descriptionArray.push(data.facts[units[i]][formalLabelObjs[j]].description);
-                            subCorrespondingUnit.push(data.facts[units[i]][formalLabelObjs[j]].units);
+                            if (data.facts[units[i]][formalLabelObjs[j]].label) {
+                                // THIS IS THE PROBLEM !! UNDER HERE 
+                                correspondingUnit.push(units[i]);
+                                // THIS IS THE PROBLEM !! ABOVE HERE
+                                labelArray.push(data.facts[units[i]][formalLabelObjs[j]].label);
+                                descriptionArray.push(data.facts[units[i]][formalLabelObjs[j]].description);
+                                subCorrespondingUnit.push(data.facts[units[i]][formalLabelObjs[j]].units);
+                            }
+                           
 
                             
                         }
@@ -80,14 +89,13 @@ export interface CompanyFactsJson {
                     //turning array into jsx elements
                     setBars(labelArray.map((fact, index) => (
                         <div 
-                        key={fact} 
+                        key={labelArray[index]} 
                         onClick={() => {
                             
                             clickReaction(fact); 
                             console.log(data.facts);
-                            const realUnit = Object.keys(data.facts)
+                            
                             //pass in CIK here 
-                            console.log(grabData);
                             dataSelectedFunc(grabData(data, correspondingUnit[index], formalLabelObjs[index], subCorrespondingUnit[index]));
                             console.log(dataSelected)
                         }
@@ -109,12 +117,19 @@ export interface CompanyFactsJson {
         }, []); 
     
         const grabData = (data: any, unit: string, label: string, subUnit: string ) => {
-            
+            if (!data || !data.facts || !data.facts[unit] || !data.facts[unit][label] || !data.facts[unit][label].units) {
+                console.log(data.facts);
+                console.log(data.facts[unit]);
+                console.log(data.facts[unit][label]);
+                console.log(label);
+                console.log(data.facts[unit][label].units);
+                
+                return [];
+            }
+
+            let dataArray: any = [];
             const subUnitStr = Object.keys(subUnit);
-            
-           const dataArray = data.facts[unit][label].units[subUnitStr[0]];
-           //[label].units[subUnit];
-            
+            dataArray = data.facts[unit][label].units[subUnitStr[0]];
            return dataArray;
         }
     
