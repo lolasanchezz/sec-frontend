@@ -96,12 +96,13 @@ export interface CompanyFactsJson {
                         key={labelArray[index]} 
                         onClick={() => {
                             
-                            clickReaction(fact); 
-                            console.log(data.facts);
+                             
+                            clickReaction(data.facts[correspondingUnit[index]][finalLabelObjs[index]].label);
                             
                             //pass in CIK here 
                             dataSelectedFunc(grabData(data, correspondingUnit[index], finalLabelObjs[index], subCorrespondingUnit[index]));
-                            console.log(dataSelected)
+                            
+                            
                         }
                         }
                         className = {styles.barsContainer}>
@@ -121,12 +122,14 @@ export interface CompanyFactsJson {
         }, []); 
     
         const grabData = (data: any, unit: string, label: string, subUnit: string ) => {
-
+           
+            clickReaction(label);
             
 
             let dataArray: any = [];
             const subUnitStr = Object.keys(subUnit);
             dataArray = data.facts[unit][label].units[subUnitStr[0]];
+            
            return dataArray;
         }
     
