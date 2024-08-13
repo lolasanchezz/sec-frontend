@@ -61,21 +61,24 @@ export interface CompanyFactsJson {
                     const labelArray: any[] = [];
                     const descriptionArray: string[] = [];
                     const correspondingUnit: string[] = [];
+                    let finalLabelObjs: string[] = [];
                     let formalLabelObjs: string[] = [];
                     const subCorrespondingUnit: string[] = [];
                     
                     for (let i = 0; i < (units.length); i++) {
                         if (Object.keys(data.facts[units[i]])){
                          formalLabelObjs = Object.keys(data.facts[units[i]]);
-                         console.log('run');
+                         console.log(formalLabelObjs);
+                         finalLabelObjs = finalLabelObjs.concat(formalLabelObjs);
+                         console.log(finalLabelObjs);
                         } else {
                             console.log('found null');
                         }
                         for (let j = 0; j < formalLabelObjs.length; j++) {
                             if (data.facts[units[i]][formalLabelObjs[j]].label) {
-                                // THIS IS THE PROBLEM !! UNDER HERE 
+                                
                                 correspondingUnit.push(units[i]);
-                                // THIS IS THE PROBLEM !! ABOVE HERE
+                                
                                 labelArray.push(data.facts[units[i]][formalLabelObjs[j]].label);
                                 descriptionArray.push(data.facts[units[i]][formalLabelObjs[j]].description);
                                 subCorrespondingUnit.push(data.facts[units[i]][formalLabelObjs[j]].units);
@@ -85,6 +88,7 @@ export interface CompanyFactsJson {
                             
                         }
                     }
+                    
                     giveLabels(labelArray);
                     //turning array into jsx elements
                     setBars(labelArray.map((fact, index) => (
@@ -96,7 +100,7 @@ export interface CompanyFactsJson {
                             console.log(data.facts);
                             
                             //pass in CIK here 
-                            dataSelectedFunc(grabData(data, correspondingUnit[index], formalLabelObjs[index], subCorrespondingUnit[index]));
+                            dataSelectedFunc(grabData(data, correspondingUnit[index], finalLabelObjs[index], subCorrespondingUnit[index]));
                             console.log(dataSelected)
                         }
                         }
