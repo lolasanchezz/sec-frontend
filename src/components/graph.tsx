@@ -42,6 +42,22 @@ const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
     //start to take data and put it together
     let data: any = [['date filed', factClicked]];
     const allFy = (dataSelected.filter((point : any) => point.fp === 'FY')) ? true : false;
+    
+    const majorityElementArr : any[] = [];
+    for (let i = 0; i < dataSelected.length; i++){
+        
+        if (!(majorityElementArr.includes(dataSelected[i].form))) {
+            const form = dataSelected[i].form;
+            let newObj = {[form] : 0};
+            majorityElementArr.push(newObj);
+            console.log(majorityElementArr);
+        } else {
+            let str = dataSelected[i].form;
+            
+            majorityElementArr[majorityElementArr.indexOf(str)] = majorityElementArr[majorityElementArr.indexOf(str)][str] + 1;
+        }
+    };
+
     for (let i = 0; i < dataSelected.length; i++){
         if((dataSelected[i].fp === 'FY')&&(!allFy)){
             continue;
