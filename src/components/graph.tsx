@@ -61,9 +61,18 @@ const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
         }
        
     };
-  
+    let majorityElement = '';
+    let majorityElementNumb = 0;
+    majorityElementArr.forEach((element:object) => {
+        if(Object.values(element)[0] > majorityElementNumb) {
+             majorityElement = Object.keys(element)[0];
+             majorityElementNumb = Object.values(element)[0];
+        } 
+    });
+
+    console.log(majorityElement, majorityElementNumb);
     for (let i = 0; i < dataSelected.length; i++){
-        if((dataSelected[i].fp === 'FY')&&(!allFy)){
+        if(!(dataSelected[i].form === majorityElement)){
             continue;
         }
         let firstDataPoint = parseInt(dataSelected[i].end);
