@@ -18,22 +18,32 @@ const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
 
     
 
-
+    const createUrl = () => {
+        const chartContainer = document.getElementById('chartDiv');
+        const chart = (chartContainer as any)._chart
+        if (chart){
+         
+        const imgUri = chart.getImageURI();
+        console.log(imgUri);
+        setUrl(imgUri);
+        window.open(imgUri);
+        }
+    };
 
 
     
     useEffect(() => {
         
-        if ((typeof dataSelected === "undefined") || (!(factClicked))){
+        if ((typeof dataSelected === "undefined") || (!(factClicked)) || (dataSelected ==='')){
             console.log('returned');
              return;
         } else {
-            
+            console.log(dataSelected );
     //start to take data and put it together
     let data: any = [['date filed', factClicked]];
-    
+    const allFy = (dataSelected.filter((point : any) => point.fp === 'FY')) ? true : false;
     for (let i = 0; i < dataSelected.length; i++){
-        if(dataSelected[i].fp === 'FY'){
+        if((dataSelected[i].fp === 'FY')&&(!allFy)){
             continue;
         }
         let firstDataPoint = parseInt(dataSelected[i].end);
@@ -41,11 +51,8 @@ const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
     }
     
     setFinalData(data);
+    console.log(data);
     
-    const chartContainer = document.getElementById('chartDiv');
-    const chart = (chartContainer as any)._chart
-    const imgUri = chart.getImageURI();
-    setUrl(imgUri);
 
 
     }
@@ -72,7 +79,7 @@ return(
   }
   {((typeof dataSelected === "undefined")||(factClicked === "")||(dataSelected ==='')||(!(data))) ?
   <h1></h1>: 
-   <a href = {url}>download graph</a>
+   <a onClick = {createUrl} href = {url}>download graph</a>
 }
    </div>
 );
