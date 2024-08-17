@@ -46,18 +46,22 @@ const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
     const majorityElementArr : any[] = [];
     for (let i = 0; i < dataSelected.length; i++){
         
-        if (!(majorityElementArr.includes(dataSelected[i].form))) {
+        if (!(majorityElementArr.some((element) => Object.keys(element)[0] === dataSelected[i].form))) {
+            
             const form = dataSelected[i].form;
+            console.log(majorityElementArr)
             let newObj = {[form] : 0};
             majorityElementArr.push(newObj);
-            console.log(majorityElementArr);
         } else {
             let str = dataSelected[i].form;
-            
-            majorityElementArr[majorityElementArr.indexOf(str)] = majorityElementArr[majorityElementArr.indexOf(str)][str] + 1;
+            const accessedVar = majorityElementArr.findIndex((obj) => Object.keys(obj)[0] === str);
+            const newValue = majorityElementArr[accessedVar][str] + 1;
+            console.log(newValue)
+           majorityElementArr[accessedVar] = newValue;
         }
+       
     };
-
+    console.log(majorityElementArr);
     for (let i = 0; i < dataSelected.length; i++){
         if((dataSelected[i].fp === 'FY')&&(!allFy)){
             continue;
