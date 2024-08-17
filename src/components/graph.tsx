@@ -55,13 +55,13 @@ const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
         } else {
             let str = dataSelected[i].form;
             const accessedVar = majorityElementArr.findIndex((obj) => Object.keys(obj)[0] === str);
-            const newValue = majorityElementArr[accessedVar][str] + 1;
+            const newValue = majorityElementArr[accessedVar][str] + 1; 
             console.log(newValue)
-           majorityElementArr[accessedVar] = newValue;
+          majorityElementArr[accessedVar][str] = newValue;
         }
        
     };
-    console.log(majorityElementArr);
+  
     for (let i = 0; i < dataSelected.length; i++){
         if((dataSelected[i].fp === 'FY')&&(!allFy)){
             continue;
