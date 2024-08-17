@@ -68,20 +68,24 @@ export interface CompanyFactsJson {
                         
                         if (Object.keys(data.facts[units[i]])){
                          formalLabelObjs = Object.keys(data.facts[units[i]]);
-                      
                          finalLabelObjs = finalLabelObjs.concat(formalLabelObjs);
                          
                         } else {
                             console.log('found null');
                         }
                         for (let j = 0; j < formalLabelObjs.length; j++) {
+                            
                             if (data.facts[units[i]][formalLabelObjs[j]].label) {
-                               
+                                
                                 correspondingUnit.push(units[i]);
                                 
                                 labelArray.push(data.facts[units[i]][formalLabelObjs[j]].label);
                                 descriptionArray.push(data.facts[units[i]][formalLabelObjs[j]].description);
-                                subCorrespondingUnit.push(data.facts[units[i]][formalLabelObjs[j]].units);
+                                subCorrespondingUnit.push((Object.keys(data.facts[units[i]][formalLabelObjs[j]].units))[0]);
+                                //console.log(subCorrespondingUnit[j]);
+                                if (data.facts[units[i]][formalLabelObjs[j]].units[subCorrespondingUnit[j]] < 2) {
+                                    break;
+                                }
                             }
                            
 
@@ -98,10 +102,10 @@ export interface CompanyFactsJson {
                             
                              
                             clickReaction(data.facts[correspondingUnit[index]][finalLabelObjs[index]].label);
-                            console.log(data)
+                            
                             //pass in CIK here 
                             dataSelectedFunc(grabData(data, correspondingUnit[index], finalLabelObjs[index], subCorrespondingUnit[index]));
-                            
+                           
                             
                         }
                         }
@@ -128,8 +132,7 @@ export interface CompanyFactsJson {
 
             let dataArray: any = [];
             const subUnitStr = Object.keys(subUnit);
-            dataArray = data.facts[unit][label].units[subUnitStr[0]];
-            
+            dataArray = data.facts[unit][label].units[subUnit];
            return dataArray;
         }
     
