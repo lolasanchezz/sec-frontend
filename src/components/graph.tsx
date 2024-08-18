@@ -41,8 +41,7 @@ const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
             console.log(dataSelected );
     //start to take data and put it together
     let data: any = [['date filed', factClicked]];
-    const allFy = (dataSelected.filter((point : any) => point.fp === 'FY')) ? true : false;
-    
+
     const majorityElementArr : any[] = [];
     for (let i = 0; i < dataSelected.length; i++){
         
@@ -75,7 +74,9 @@ const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
         if(!(dataSelected[i].form === majorityElement)){
             continue;
         }
-        let firstDataPoint = parseInt(dataSelected[i].end);
+        let firstDataPoint = ((dataSelected[i].end)).replace(/-/g, "");
+        console.log((dataSelected[i].end).replace(/-/g, ""))
+        console.log(firstDataPoint)
         data.push([firstDataPoint, dataSelected[i].val]);
     }
     
