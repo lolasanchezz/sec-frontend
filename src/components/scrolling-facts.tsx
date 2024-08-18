@@ -76,25 +76,24 @@ export interface CompanyFactsJson {
                         for (let j = 0; j < formalLabelObjs.length; j++) {
                             
                             if (data.facts[units[i]][formalLabelObjs[j]].label) {
+                                if (((data.facts[units[i]][formalLabelObjs[j]].units[(Object.keys(data.facts[units[i]][formalLabelObjs[j]]))[0]]).length < 2)){
+                                    console.log((data.facts[units[i]][formalLabelObjs[j]].units[subCorrespondingUnit[(subCorrespondingUnit.length) - 1]]))
+                                    console.log('ranee')
+
+                                   // correspondingUnit.pop();
+                                    //labelArray.pop();
+                                   // console.log(labelArray[labelArray.length - 1])
+                                  //  descriptionArray.pop();
+                                  //  subCorrespondingUnit.pop();
+                                }
                                 
                                 correspondingUnit.push(units[i]);
-                                
                                 labelArray.push(data.facts[units[i]][formalLabelObjs[j]].label);
                                 console.log(data.facts[units[i]][formalLabelObjs[j]].label)
                                 descriptionArray.push(data.facts[units[i]][formalLabelObjs[j]].description);
                                 subCorrespondingUnit.push((Object.keys(data.facts[units[i]][formalLabelObjs[j]].units))[0]);
                                 //checks to see the length of the dataset and whether its too small and whether to exclude it
-                                if ((data.facts[units[i]][formalLabelObjs[j]].units[subCorrespondingUnit[(subCorrespondingUnit.length) - 1]]).length < 2){
-                                    console.log((data.facts[units[i]][formalLabelObjs[j]].units[subCorrespondingUnit[(subCorrespondingUnit.length) - 1]]))
-                                    console.log('ran')
-                                    
-                                    correspondingUnit.pop();
-                                    //labelArray.pop();
-                                    console.log(labelArray[labelArray.length - 1])
-                                    descriptionArray.pop();
-                                    subCorrespondingUnit.pop();
-                                                                  
-                                }
+                                
 
 
                             }
