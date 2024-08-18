@@ -80,24 +80,36 @@ export interface CompanyFactsJson {
                                 correspondingUnit.push(units[i]);
                                 
                                 labelArray.push(data.facts[units[i]][formalLabelObjs[j]].label);
+                                console.log(data.facts[units[i]][formalLabelObjs[j]].label)
                                 descriptionArray.push(data.facts[units[i]][formalLabelObjs[j]].description);
                                 subCorrespondingUnit.push((Object.keys(data.facts[units[i]][formalLabelObjs[j]].units))[0]);
-                                //console.log(subCorrespondingUnit[j]);
-                                if (data.facts[units[i]][formalLabelObjs[j]].units[subCorrespondingUnit[j]] < 2) {
-                                    break;
+                                //checks to see the length of the dataset and whether its too small and whether to exclude it
+                                if ((data.facts[units[i]][formalLabelObjs[j]].units[subCorrespondingUnit[(subCorrespondingUnit.length) - 1]]).length < 2){
+                                    console.log((data.facts[units[i]][formalLabelObjs[j]].units[subCorrespondingUnit[(subCorrespondingUnit.length) - 1]]))
+                                    console.log('ran')
+                                    
+                                    correspondingUnit.pop();
+                                    //labelArray.pop();
+                                    console.log(labelArray[labelArray.length - 1])
+                                    descriptionArray.pop();
+                                    subCorrespondingUnit.pop();
+                                                                  
                                 }
+
+
                             }
                            
 
                             
                         }
-                    }
+                    }1
                     
                     giveLabels(labelArray);
                     //turning array into jsx elements
                     setBars(labelArray.map((fact, index) => (
+                        
                         <div 
-                        key={labelArray[index]} 
+                        key={fact} 
                         onClick={() => {
                             
                              
