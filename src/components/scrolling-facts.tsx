@@ -99,11 +99,11 @@ export interface CompanyFactsJson {
 
                             
                         }
-                    }1
+                    }
                     
                     giveLabels(labelArray);
                     //turning array into jsx elements
-                    const firstBarsObj = (labelArray.map((fact, index) => (
+                     firstBarsObj = (labelArray.map((fact, index) => (
                         
                         <div 
                         key={fact} 
@@ -130,30 +130,31 @@ export interface CompanyFactsJson {
                 } finally {
                     console.log('Data fetching complete');
                 }
-
+                const tempBars = firstBarsObj;
+                for (let i = 0; i < removedIndexes.length; i++){
+                    let indexToBeRemoved = removedIndexes[i];
+                    
+                    //tempBars.splice(indexToBeRemoved, 1);
+                };
+               setBars(tempBars);
 
               
                 
             };
             
     //run the api call
-            fetchData();
+            
              
 
-
-
+   
+        fetchData();
 
         }, []); 
+        
         ///getting rid of small data TAKE 2 💯 
        
-        console.log(firstBarsObj)
-             const tempBars = firstBarsObj;
-             for (let i = 0; i < removedIndexes.length; i++){
-                 let indexToBeRemoved = removedIndexes[i];
-                 
-                 //tempBars.splice(indexToBeRemoved, 1);
-             };
-             setBars(tempBars);
+       
+             
 
 
     
