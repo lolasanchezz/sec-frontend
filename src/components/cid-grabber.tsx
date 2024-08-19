@@ -2,7 +2,7 @@ import {useState} from 'react';
 
 
 
-const CidGrabber: React.FC<any>  = () => {
+const CidGrabber: React.FC<any>  = ({setCIK}) => {
     const [ticker,setTicker] = useState("GOOG");
     
   
@@ -21,9 +21,13 @@ const CidGrabber: React.FC<any>  = () => {
                     const recievedData = await response.text();
                     const data = recievedData;
                    console.log(data);
+                   
+                   setCIK(data);
+                   
                     
         } catch (error){
             console.error(error);
+            setCIK("not found");
         }
     };
     };

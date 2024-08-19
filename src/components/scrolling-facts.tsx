@@ -60,6 +60,7 @@ export interface CompanyFactsJson {
                 return;
                 }
                 try {
+                    console.log(cik);
                     //data fetching (no editing!!)
                     const response = await fetch('http://localhost:3000/companyFacts/CIK' + cik);
                     if (!response.ok) {
