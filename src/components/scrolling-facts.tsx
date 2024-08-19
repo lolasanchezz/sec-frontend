@@ -51,14 +51,22 @@ export interface CompanyFactsJson {
 
         useEffect(() => {
             const fetchData = async () => {
+                console.log(cik);
                 if (cik === ""){
                     setBars(
                 <div>
-                    <h1>enter in a ticker!</h1>
+                    <h2>enter in a ticker!</h2>
                 </div>
                 )
                 return;
-                }
+                } else if (cik == "not found"){
+                    setBars(
+                        <div>
+                            <h2>ticker not found - did you make a typo?</h2>
+                        </div>
+                    )
+                    return;
+                };
                 try {
                     console.log(cik);
                     //data fetching (no editing!!)

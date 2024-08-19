@@ -26,7 +26,7 @@ const CidGrabber: React.FC<any>  = ({setCIK}) => {
                    
                     
         } catch (error){
-            console.error(error);
+            //console.error(error);
             setCIK("not found");
         }
     };
@@ -34,7 +34,7 @@ const CidGrabber: React.FC<any>  = ({setCIK}) => {
 
     return (
         <div>
-            <label> enter a ticker
+            <label>
                 <input name = "cikInput" type = "text" onKeyDown = {fetchData}></input>
             </label>
         </div>
