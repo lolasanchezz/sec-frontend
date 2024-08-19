@@ -2,37 +2,37 @@ import {useState} from 'react';
 
 
 
-const CidGrabber: React.FC<any>  = (givenTicker) => {
+const CidGrabber: React.FC<any>  = () => {
     const [ticker,setTicker] = useState("GOOG");
     
-    givenTicker.preventDefault();
-            let tickerForm = givenTicker.target;
-            let tickerData = new FormData(tickerForm);
-            console.log(tickerData);
+  
     
-    const fetchData = async() => {
-        
+    const fetchData = async(givenTicker: any) => {
+        if (givenTicker.key === 'Enter'){
+        //givenTicker.preventDefault();
+        setTicker(givenTicker.target.value)
+        console.log(givenTicker.target.value);
         try {
-            
-            /*
-            const response = await fetch('http://localhost:3000/cik/' + ticker);
+        
+            const response = await fetch('http://localhost:3000/cik/' + givenTicker.target.value);
                     if (!response.ok) {
                         throw new Error('response failed');
                     }
-                    const recievedData = await response.json();
+                    const recievedData = await response.text();
                     const data = recievedData;
-                    */
+                   console.log(data);
                     
         } catch (error){
             console.error(error);
         }
     };
+    };
 
     return (
         <div>
-            <form onSubmit = {fetchData}>
-                <input name = "cikInput"></input>
-            </form>
+            <label> enter a ticker
+                <input name = "cikInput" type = "text" onKeyDown = {fetchData}></input>
+            </label>
         </div>
     )
 
