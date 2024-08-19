@@ -6,6 +6,9 @@ import ScrollingFacts from "../components/scrolling-facts";
 import { CompanyFactsJson } from "../components/scrolling-facts"; 
 import React, { useEffect, useState } from 'react';
 import Graph from "../components/graph";
+import CidGrabber from "@/components/cid-grabber";
+
+
 export default function Home() {
 
   interface objCompanyFacts {
@@ -22,7 +25,10 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-     <ScrollingFacts clickReaction = {setFactClicked} dataSelectedFunc = {setDataSelected} className = {styles.barsContainer} giveLabels = {setAllLabels} dataSelected = {dataSelected}></ScrollingFacts>
+      <div className = {styles.leftBar}>
+        <CidGrabber></CidGrabber>
+     <ScrollingFacts clickReaction = {setFactClicked} dataSelectedFunc = {setDataSelected} className = {styles.barsContainer} giveLabels = {setAllLabels} dataSelected = {dataSelected} labelsObj = {allLabels}></ScrollingFacts>
+     </div>
      <Graph factClicked = {factClicked} dataSelected = {dataSelected}></Graph>
     </main>
   );
