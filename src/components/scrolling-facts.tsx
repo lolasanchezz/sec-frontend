@@ -40,19 +40,28 @@ export interface CompanyFactsJson {
     giveLabels: any;
     dataSelected: any;
     labelsObj: any;
+    cik: any;
   }
 
-    const ScrollingFacts: React.FC<ScrollingFactsProps> = ({ clickReaction, dataSelected, dataSelectedFunc, giveLabels, labelsObj }) => {
-        const [bars, setBars] = useState<JSX.Element[]>([]);
+    const ScrollingFacts: React.FC<ScrollingFactsProps> = ({ clickReaction, dataSelected, dataSelectedFunc, giveLabels, labelsObj, cik }) => {
+        const [bars, setBars] = useState('' as any);
         const [dataStatus, setDataStatus] = useState('loading');
         const removedIndexes: number[] = [];
         let firstBarsObj : any;
 
         useEffect(() => {
             const fetchData = async () => {
+                if (cik === ""){
+                    setBars(
+                <div>
+                    <h1>enter in a ticker!</h1>
+                </div>
+                )
+                return;
+                }
                 try {
                     //data fetching (no editing!!)
-                    const response = await fetch('http://localhost:3000/companyFacts/CIK0001018724');
+                    const response = await fetch('http://localhost:3000/companyFacts/CIK' + cik);
                     if (!response.ok) {
                         throw new Error('response failed');
                     }
@@ -149,7 +158,7 @@ export interface CompanyFactsJson {
    
         fetchData();
 
-        }, []); 
+        }, [cik]); 
         
         ///getting rid of small data TAKE 2 💯 
        
