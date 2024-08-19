@@ -39,12 +39,15 @@ export interface CompanyFactsJson {
     dataSelectedFunc: any;
     giveLabels: any;
     dataSelected: any;
+    labelsObj: any;
   }
 
-    const ScrollingFacts: React.FC<ScrollingFactsProps> = ({ clickReaction, dataSelected, dataSelectedFunc, giveLabels }) => {
+    const ScrollingFacts: React.FC<ScrollingFactsProps> = ({ clickReaction, dataSelected, dataSelectedFunc, giveLabels, labelsObj }) => {
         const [bars, setBars] = useState<JSX.Element[]>([]);
         const [dataStatus, setDataStatus] = useState('loading');
-    
+        const removedIndexes: number[] = [];
+        let firstBarsObj : any;
+
         useEffect(() => {
             const fetchData = async () => {
                 try {
@@ -64,6 +67,7 @@ export interface CompanyFactsJson {
                     let formalLabelObjs: string[] = [];
                     const subCorrespondingUnit: string[] = [];
                     
+                    
                     for (let i = 0; i < (units.length); i++) {
                         
                         if (Object.keys(data.facts[units[i]])){
@@ -76,25 +80,19 @@ export interface CompanyFactsJson {
                         for (let j = 0; j < formalLabelObjs.length; j++) {
                             
                             if (data.facts[units[i]][formalLabelObjs[j]].label) {
-                                if (((data.facts[units[i]][formalLabelObjs[j]].units[(Object.keys(data.facts[units[i]][formalLabelObjs[j]]))[0]]).length < 2)){
-                                    console.log((data.facts[units[i]][formalLabelObjs[j]].units[subCorrespondingUnit[(subCorrespondingUnit.length) - 1]]))
-                                    console.log('ranee')
-
-                                   // correspondingUnit.pop();
-                                    //labelArray.pop();
-                                   // console.log(labelArray[labelArray.length - 1])
-                                  //  descriptionArray.pop();
-                                  //  subCorrespondingUnit.pop();
-                                }
                                 
+                                
+                                    //[(Object.keys(data.facts[units[i]][formalLabelObjs[j]]))[0]])))
                                 correspondingUnit.push(units[i]);
                                 labelArray.push(data.facts[units[i]][formalLabelObjs[j]].label);
-                                console.log(data.facts[units[i]][formalLabelObjs[j]].label)
+                                
                                 descriptionArray.push(data.facts[units[i]][formalLabelObjs[j]].description);
                                 subCorrespondingUnit.push((Object.keys(data.facts[units[i]][formalLabelObjs[j]].units))[0]);
                                 //checks to see the length of the dataset and whether its too small and whether to exclude it
                                 
-
+                                if ((data.facts[units[i]][formalLabelObjs[j]].units[subCorrespondingUnit[(subCorrespondingUnit.length) - 1]]).length <= 2){
+                                    removedIndexes.push(labelArray.length);
+                                }
 
                             }
                            
@@ -105,7 +103,7 @@ export interface CompanyFactsJson {
                     
                     giveLabels(labelArray);
                     //turning array into jsx elements
-                    setBars(labelArray.map((fact, index) => (
+                    const firstBarsObj = (labelArray.map((fact, index) => (
                         
                         <div 
                         key={fact} 
@@ -124,17 +122,40 @@ export interface CompanyFactsJson {
                             <FactTemplate label = {fact} description = {descriptionArray[index]}></FactTemplate>
                         </div>
                     )));
+                    
                     setDataStatus('ready');
-
+                    
                 } catch (error) {
                     console.error('Error fetching data:', error);
                 } finally {
                     console.log('Data fetching complete');
                 }
+
+
+              
+                
             };
+            
     //run the api call
             fetchData();
+             
+
+
+
+
         }, []); 
+        ///getting rid of small data TAKE 2 💯 
+       
+        console.log(firstBarsObj)
+             const tempBars = firstBarsObj;
+             for (let i = 0; i < removedIndexes.length; i++){
+                 let indexToBeRemoved = removedIndexes[i];
+                 
+                 //tempBars.splice(indexToBeRemoved, 1);
+             };
+             setBars(tempBars);
+
+
     
         const grabData = (data: any, unit: string, label: string, subUnit: string ) => {
            
