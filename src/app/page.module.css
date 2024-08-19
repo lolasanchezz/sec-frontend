@@ -9,7 +9,7 @@
     
     border: 5px solid rgba(0, 0, 0, 0);
     padding: 2%;
-    font-size: 0.4rem;
+    
     color: rgb(255, 255, 255);
     border: 0.05rem solid white;
     
@@ -40,4 +40,15 @@
     display: flex;
     flex-direction: column;
     padding: 5%;
+    width: 50%;
+}
+
+.boxHovered {
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.237);
+}
+
+.boxStale {
+    font-size: 0.8rem;
+    
 }

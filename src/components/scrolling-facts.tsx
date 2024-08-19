@@ -17,7 +17,7 @@ const FactTemplate: React.FC<{ label: string; description: string }> = ({ label,
         }} onMouseLeave = {()=> {
             setHovering(false);
         }}>
-            <h1>{hovering ? description: label }</h1>
+            <h1 className = {hovering ? styles.boxHovered: styles.boxStale}> {hovering ? description: label }</h1>
             </div>
     );
 };
