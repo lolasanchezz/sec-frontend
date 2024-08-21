@@ -42,6 +42,14 @@ export interface CompanyFactsJson {
     labelsObj: any;
     cik: any;
   }
+  interface orgData {
+    path: string
+    longLabel: string
+    description: string
+    unit: string
+    subUnit: string
+
+}
 
     const ScrollingFacts: React.FC<ScrollingFactsProps> = ({ clickReaction, dataSelected, dataSelectedFunc, giveLabels, labelsObj, cik }) => {
         const [bars, setBars] = useState('' as any);
@@ -81,14 +89,7 @@ export interface CompanyFactsJson {
                    
                     
                     //making mr hashamap
-                    interface orgData {
-                        path: string
-                        longLabel: string
-                        description: string
-                        unit: string
-                        subUnit: string
-
-                    }
+                    
                     
 
 
@@ -103,9 +104,12 @@ export interface CompanyFactsJson {
                             let subLabel = subLabels[i]
                             let Label = data.facts[unit][subLabel].label as string;
                             let description = data.facts[unit][subLabel].description
-                            let subUnit = data.facts[unit][subLabel].units;
+                            let subUnit = (Object.keys(data.facts[unit][subLabel].units))[0];
+                            let path = `${unit}.${subLabel}.units.${subUnit}.`
+
+
                             mappedValues.push({[Label]: {
-                                path: `${unit}.${subLabel}.units.${subUnit}.`,
+                                path: path,
                                 longLabel: Label,
                                 description: description,
                                 subUnit: subUnit,
@@ -117,6 +121,14 @@ export interface CompanyFactsJson {
                         
                     }
                     
+                    for (let i = 0; i < mappedValues.length; i++){
+                        let path:string = mappedValues[i][Object.keys(mappedValues[i])[0]].path
+                        console.log(path);
+                    }
+
+
+
+
                     giveLabels(mappedValues);
                     //turning array into jsx elements
                      firstBarsObj = (mappedValues.map((fact, index) => (
@@ -129,7 +141,7 @@ export interface CompanyFactsJson {
                             clickReaction(Object.keys(fact)[0]);
                             
                             //pass in CIK here 
-                            dataSelectedFunc(grabData(data, fact));
+                            dataSelectedFunc(grabData(data, fact[Object.keys(fact)[0]]));
                            
                             
                         }
@@ -175,12 +187,12 @@ export interface CompanyFactsJson {
 
 
     
-        const grabData = (data: any, object: any) => {
+        const grabData = (data: any, object: orgData) => {
             let label = Object.keys(object)[0]
             clickReaction(label);
-            
-            let dataArray = data.facts[object[label].path];
-
+            console.log(data);
+            let dataArray = data.facts[object.unit][object.longLabel].units[object.subUnit];
+            console.log(dataArray);
             
            return dataArray;
         }
