@@ -77,7 +77,7 @@ export interface CompanyFactsJson {
                     const recievedData = await response.json();
                     const data = recievedData;
                     //turning data into useful array
-                    const units = (Object.keys(data.facts));   
+                    
                     const labelArray: any[] = [];
                     const descriptionArray: string[] = [];
                     const correspondingUnit: string[] = [];
@@ -85,38 +85,30 @@ export interface CompanyFactsJson {
                     let formalLabelObjs: string[] = [];
                     const subCorrespondingUnit: string[] = [];
                     
+                    //making mr hashamap
+                    interface orgData {
+                        path: string
+                        readLabel: string
+                        description: string
+                        unit: string
+                        subunit: string
+
+                    }
                     
+
+
+                    const mappedValues: [string, orgData][] = [];
+                    const units = (Object.keys(data.facts));   
                     for (let i = 0; i < (units.length); i++) {
+                        let unit = units[i];
+                        let subLabels = Object.keys(data.facts[units[i]])
                         
-                        if (Object.keys(data.facts[units[i]])){
-                         formalLabelObjs = Object.keys(data.facts[units[i]]);
-                         finalLabelObjs = finalLabelObjs.concat(formalLabelObjs);
-                         
-                        } else {
-                            console.log('found null');
+                        for (let i = 0; i < (subLabels.length); i++) {
+                            let subLabel = subLabels[i]
+                            let label = data.facts[unit][subLabel].label
+                            let description = data.facts[]
                         }
-                        for (let j = 0; j < formalLabelObjs.length; j++) {
-                            
-                            if (data.facts[units[i]][formalLabelObjs[j]].label) {
-                                
-                                
-                                    //[(Object.keys(data.facts[units[i]][formalLabelObjs[j]]))[0]])))
-                                correspondingUnit.push(units[i]);
-                                labelArray.push(data.facts[units[i]][formalLabelObjs[j]].label);
-                                
-                                descriptionArray.push(data.facts[units[i]][formalLabelObjs[j]].description);
-                                subCorrespondingUnit.push((Object.keys(data.facts[units[i]][formalLabelObjs[j]].units))[0]);
-                                //checks to see the length of the dataset and whether its too small and whether to exclude it
-                                
-                                if ((data.facts[units[i]][formalLabelObjs[j]].units[subCorrespondingUnit[(subCorrespondingUnit.length) - 1]]).length <= 2){
-                                    removedIndexes.push(labelArray.length);
-                                }
-
-                            }
-                           
-
-                            
-                        }
+                        
                     }
                     
                     giveLabels(labelArray);
@@ -143,18 +135,32 @@ export interface CompanyFactsJson {
                     
                     setDataStatus('ready');
                     
+                    firstBarsObj = firstBarsObj.filter((_: any, index: number) => {
+                        const units: { [key: string]: { val: any }[] } = data.facts[correspondingUnit[index]][finalLabelObjs[index]].units;
+                        const subUnitArray: { val: any }[] = units[subCorrespondingUnit[index]];
+                    
+                        // Check if the data length is at least 3
+                        if (subUnitArray.length < 3) return false;
+                    
+                        // Extract values from the `subUnitArray` and check if all values are the same
+                        const values: any[] = subUnitArray.map(unit => unit.val);
+                        const allSame: boolean = values.every(val => val === values[0]);
+                    
+                        return !allSame; // Return true if not all values are the same
+                    });
+
+
+
                 } catch (error) {
                     console.error('Error fetching data:', error);
                 } finally {
                     console.log('Data fetching complete');
                 }
-                const tempBars = firstBarsObj;
-                for (let i = 0; i < removedIndexes.length; i++){
-                    let indexToBeRemoved = removedIndexes[i];
-                    
-                    //tempBars.splice(indexToBeRemoved, 1);
-                };
-               setBars(tempBars);
+                
+
+
+                //DO NOT DELETE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+               setBars(firstBarsObj);
 
               
                 

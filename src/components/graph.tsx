@@ -74,7 +74,8 @@ const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
         if(!(dataSelected[i].form === majorityElement)){
             continue;
         }
-        let firstDataPoint = ((dataSelected[i].end)).replace(/-/g, "");
+       // let firstDataPoint = ((dataSelected[i].end)).replace(/-/g, "");
+       let firstDataPoint = new Date(dataSelected[i].end);
         console.log((dataSelected[i].end).replace(/-/g, ""))
         console.log(firstDataPoint)
         data.push([firstDataPoint, dataSelected[i].val]);
