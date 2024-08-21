@@ -88,39 +88,50 @@ export interface CompanyFactsJson {
                     //making mr hashamap
                     interface orgData {
                         path: string
-                        readLabel: string
+                        longLabel: string
                         description: string
                         unit: string
-                        subunit: string
+                        subUnit: string
 
                     }
                     
 
 
-                    const mappedValues: [string, orgData][] = [];
+                    const mappedValues: Array<{[key: string]: orgData}> = [];
                     const units = (Object.keys(data.facts));   
                     for (let i = 0; i < (units.length); i++) {
+
                         let unit = units[i];
                         let subLabels = Object.keys(data.facts[units[i]])
                         
                         for (let i = 0; i < (subLabels.length); i++) {
                             let subLabel = subLabels[i]
-                            let label = data.facts[unit][subLabel].label
-                            let description = data.facts[]
+                            let Label = data.facts[unit][subLabel].label as string;
+                            let description = data.facts[unit][subLabel].description
+                            let subUnit = data.facts[unit][subLabel].units;
+                            mappedValues.push({[Label]: {
+                                path: `data.facts.${unit}.${subLabel}.units.${subUnit}.`,
+                                longLabel: Label,
+                                description: description,
+                                subUnit: subUnit,
+                                unit: unit
+                            } 
+                             })
+
                         }
                         
                     }
                     
-                    giveLabels(labelArray);
+                    giveLabels(mappedValues);
                     //turning array into jsx elements
-                     firstBarsObj = (labelArray.map((fact, index) => (
+                     firstBarsObj = (mappedValues.map((fact, index) => (
                         
                         <div 
-                        key={fact} 
+                        key={Object.keys(fact)[0]} 
                         onClick={() => {
                             
                              
-                            clickReaction(data.facts[correspondingUnit[index]][finalLabelObjs[index]].label);
+                            clickReaction(Object.keys(fact)[0]);
                             
                             //pass in CIK here 
                             dataSelectedFunc(grabData(data, correspondingUnit[index], finalLabelObjs[index], subCorrespondingUnit[index]));
