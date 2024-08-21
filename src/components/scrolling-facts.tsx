@@ -78,12 +78,7 @@ export interface CompanyFactsJson {
                     const data = recievedData;
                     //turning data into useful array
                     
-                    const labelArray: any[] = [];
-                    const descriptionArray: string[] = [];
-                    const correspondingUnit: string[] = [];
-                    let finalLabelObjs: string[] = [];
-                    let formalLabelObjs: string[] = [];
-                    const subCorrespondingUnit: string[] = [];
+                   
                     
                     //making mr hashamap
                     interface orgData {
@@ -110,7 +105,7 @@ export interface CompanyFactsJson {
                             let description = data.facts[unit][subLabel].description
                             let subUnit = data.facts[unit][subLabel].units;
                             mappedValues.push({[Label]: {
-                                path: `data.facts.${unit}.${subLabel}.units.${subUnit}.`,
+                                path: `${unit}.${subLabel}.units.${subUnit}.`,
                                 longLabel: Label,
                                 description: description,
                                 subUnit: subUnit,
@@ -134,32 +129,19 @@ export interface CompanyFactsJson {
                             clickReaction(Object.keys(fact)[0]);
                             
                             //pass in CIK here 
-                            dataSelectedFunc(grabData(data, correspondingUnit[index], finalLabelObjs[index], subCorrespondingUnit[index]));
+                            dataSelectedFunc(grabData(data, fact));
                            
                             
                         }
                         }
                         className = {styles.barsContainer}>
-                            <FactTemplate label = {fact} description = {descriptionArray[index]}></FactTemplate>
+                            <FactTemplate label = {Object.keys(fact)[0]} description = {fact[(Object.keys(fact)[0])].description}></FactTemplate>
                         </div>
                     )));
                     
                     setDataStatus('ready');
                     
-                    firstBarsObj = firstBarsObj.filter((_: any, index: number) => {
-                        const units: { [key: string]: { val: any }[] } = data.facts[correspondingUnit[index]][finalLabelObjs[index]].units;
-                        const subUnitArray: { val: any }[] = units[subCorrespondingUnit[index]];
-                    
-                        // Check if the data length is at least 3
-                        if (subUnitArray.length < 3) return false;
-                    
-                        // Extract values from the `subUnitArray` and check if all values are the same
-                        const values: any[] = subUnitArray.map(unit => unit.val);
-                        const allSame: boolean = values.every(val => val === values[0]);
-                    
-                        return !allSame; // Return true if not all values are the same
-                    });
-
+                   
 
 
                 } catch (error) {
@@ -193,14 +175,13 @@ export interface CompanyFactsJson {
 
 
     
-        const grabData = (data: any, unit: string, label: string, subUnit: string ) => {
-           
+        const grabData = (data: any, object: any) => {
+            let label = Object.keys(object)[0]
             clickReaction(label);
             
+            let dataArray = data.facts[object[label].path];
 
-            let dataArray: any = [];
-            const subUnitStr = Object.keys(subUnit);
-            dataArray = data.facts[unit][label].units[subUnit];
+            
            return dataArray;
         }
     
