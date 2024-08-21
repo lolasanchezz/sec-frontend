@@ -57,6 +57,11 @@ export interface CompanyFactsJson {
         const removedIndexes: number[] = [];
         let firstBarsObj : any;
 
+        //debugging purposes
+        cik = "0000812011"
+
+
+
         useEffect(() => {
             const fetchData = async () => {
                 console.log(cik);
@@ -75,15 +80,16 @@ export interface CompanyFactsJson {
                     )
                     return;
                 };
-                try {
+                
                     console.log(cik);
                     //data fetching (no editing!!)
                     const response = await fetch('http://localhost:3000/companyFacts/CIK' + cik);
                     if (!response.ok) {
                         throw new Error('response failed');
                     }
-                    const recievedData = await response.json();
-                    const data = recievedData;
+
+                    const data = await response.json();
+                    
                     //turning data into useful array
                     
                    
@@ -92,7 +98,7 @@ export interface CompanyFactsJson {
                     
                     
 
-
+                    
                     const mappedValues: Array<{[key: string]: orgData}> = [];
                     const units = (Object.keys(data.facts));   
                     for (let i = 0; i < (units.length); i++) {
@@ -110,7 +116,7 @@ export interface CompanyFactsJson {
 
                             mappedValues.push({[Label]: {
                                 path: path,
-                                longLabel: Label,
+                                longLabel: subLabel,
                                 description: description,
                                 subUnit: subUnit,
                                 unit: unit
@@ -123,7 +129,7 @@ export interface CompanyFactsJson {
                     
                     for (let i = 0; i < mappedValues.length; i++){
                         let path:string = mappedValues[i][Object.keys(mappedValues[i])[0]].path
-                        console.log(path);
+                        
                     }
 
 
@@ -139,6 +145,7 @@ export interface CompanyFactsJson {
                             
                              
                             clickReaction(Object.keys(fact)[0]);
+                            console.log(data)
                             
                             //pass in CIK here 
                             dataSelectedFunc(grabData(data, fact[Object.keys(fact)[0]]));
@@ -156,11 +163,7 @@ export interface CompanyFactsJson {
                    
 
 
-                } catch (error) {
-                    console.error('Error fetching data:', error);
-                } finally {
-                    console.log('Data fetching complete');
-                }
+                
                 
 
 
@@ -190,9 +193,13 @@ export interface CompanyFactsJson {
         const grabData = (data: any, object: orgData) => {
             let label = Object.keys(object)[0]
             clickReaction(label);
-            console.log(data);
+            console.log("here");
+            console.log(object.unit)
+            console.log(data.facts[object.unit]);
+            console.log(object.longLabel)
+            //this returns undefined ^^
             let dataArray = data.facts[object.unit][object.longLabel].units[object.subUnit];
-            console.log(dataArray);
+           
             
            return dataArray;
         }
