@@ -18,7 +18,7 @@
 .barsWrapper {
     display: flex;
     flex-direction: column;
-    
+    padding-top: 5%;
     overflow: auto;
     
     
@@ -41,6 +41,7 @@
     flex-direction: column;
     padding: 5%;
     width: 50%;
+    align-items: center;
 }
 
 .boxHovered {
@@ -64,5 +65,13 @@
 
 .header {
     font-size: 1rem;
+    text-align: center;
+    padding-bottom: 5%;
+}
+
+.input {
+    all: unset;
     
+    background-color: black;
+    border-bottom: 0.1rem solid white;
 }

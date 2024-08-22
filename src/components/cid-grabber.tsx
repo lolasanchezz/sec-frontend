@@ -1,6 +1,5 @@
 import {useState} from 'react';
-
-
+import styles from "../app/page.module.css";
 
 const CidGrabber: React.FC<any>  = ({setCIK, setCompanyName}) => {
     const [ticker,setTicker] = useState("GOOG");
@@ -11,7 +10,6 @@ const CidGrabber: React.FC<any>  = ({setCIK, setCompanyName}) => {
         if (givenTicker.key === 'Enter'){
         //givenTicker.preventDefault();
         setTicker(givenTicker.target.value)
-        console.log(givenTicker.target.value);
         try {
         
             const response = await fetch('http://localhost:3000/cik/' + givenTicker.target.value);
@@ -20,13 +18,14 @@ const CidGrabber: React.FC<any>  = ({setCIK, setCompanyName}) => {
                     }
                     const recievedData = await response.text();
                     const data = recievedData;
-                   console.log(data);
-                   
-                   setCIK(data);
+                   console.log(data[1]);
+                   setCompanyName(data[1])
+                   setCIK(data[0]);
                    
                     
         } catch (error){
             //console.error(error);
+            
             setCIK("not found");
         }
     };
@@ -35,7 +34,7 @@ const CidGrabber: React.FC<any>  = ({setCIK, setCompanyName}) => {
     return (
         <div>
             <label>
-                <input name = "cikInput" type = "text" onKeyDown = {fetchData}></input>
+                <input className = {styles.input} name = "cikInput" type = "text" onKeyDown = {fetchData} placeholder = "enter ticker here"></input>
             </label>
         </div>
     )

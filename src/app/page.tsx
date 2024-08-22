@@ -22,6 +22,7 @@ export default function Home() {
   let [allLabels, setAllLabels] = useState([] as Array<string>);
  let [company, setCompany] = useState("" as any);
  let [companyName, setCompanyName] = useState("" as any);
+ const [form, setForm] = useState("")
   
 
   return (
@@ -32,10 +33,13 @@ export default function Home() {
      </div>
      <div className = {styles.rightBar}>
     <div className = {styles.header}>
+      {(companyName) ? <h2>showing{companyName}</h2> : <p></p>}
+    {(form) ? <p> showing {form} form data</p> : <p></p>}
       <h1>{factClicked}</h1>
+      
     </div>
 
-     <Graph factClicked = {factClicked} dataSelected = {dataSelected}></Graph>
+     <Graph factClicked = {factClicked} dataSelected = {dataSelected} setForm = {setForm}></Graph>
 
      </div>
     </main>

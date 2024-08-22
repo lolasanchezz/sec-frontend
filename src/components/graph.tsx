@@ -8,11 +8,12 @@ import React, { useEffect, useState } from 'react';
 interface GraphProps {
     factClicked: string;
     dataSelected: any;
+    setForm: any;
 };
 
 let data: any = [];
 
-const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
+const Graph: React.FC<GraphProps> = ({factClicked, dataSelected, setForm}) =>{
     const [finalData, setFinalData] = useState([]);
     const [url, setUrl] = useState('');
 
@@ -82,8 +83,7 @@ const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
     }
     
     setFinalData(data);
-    console.log(data);
-    console.log(finalData);
+   
 
 
     }

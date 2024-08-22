@@ -55,6 +55,7 @@ export interface CompanyFactsJson {
         const [bars, setBars] = useState('' as any);
         const [dataStatus, setDataStatus] = useState('loading');
         const removedIndexes: number[] = [];
+        
         let firstBarsObj : any;
 
         //debugging purposes
@@ -81,8 +82,9 @@ export interface CompanyFactsJson {
                     return;
                 };
                 
-                    console.log(cik);
+                    
                     //data fetching (no editing!!)
+                    if (!(cik == "not found")) {
                     const response = await fetch('http://localhost:3000/companyFacts/CIK' + cik);
                     if (!response.ok) {
                         throw new Error('response failed');
@@ -91,7 +93,7 @@ export interface CompanyFactsJson {
                     const data = await response.json();
                     
                     //turning data into useful array
-                    
+                
                    
                     
                     //making mr hashamap
@@ -149,8 +151,7 @@ export interface CompanyFactsJson {
                             
                              
                             clickReaction((Object.keys(fact)[0]).toString());
-                            console.log(Object.keys(fact)[0])
-                            console.log(data)
+                            
                             
                             //pass in CIK here 
                             dataSelectedFunc(grabData(data, fact[Object.keys(fact)[0]]));
@@ -175,7 +176,9 @@ export interface CompanyFactsJson {
                 //DO NOT DELETE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                setBars(firstBarsObj);
 
-              
+                } else {
+                    
+                };
                 
             };
             
