@@ -118,7 +118,7 @@ export interface CompanyFactsJson {
                             let subUnit = (Object.keys(data.facts[unit][subLabel].units))[0];
                             let path = `${unit}.${subLabel}.units.${subUnit}.`
 
-                            console.log(Label);
+                            console.log(data.facts[unit]);
                             mappedValues.push({[Label]: {
                                 label: Label,
                                 path: path,
@@ -142,9 +142,11 @@ export interface CompanyFactsJson {
 
                     //sorting mapped values again..
                     console.log(mappedValues);
-                    let newMappedValues = mappedValues.filter((fact) => (!(fact[Object.keys(fact)[0]].label.includes('Deprecated'))))
+                    let newMappedValues = mappedValues.filter((fact) => (!(fact[Object.keys(fact)[0]].label === null)));
+                    
+                    newMappedValues = newMappedValues.filter((fact) => (!(fact[Object.keys(fact)[0]].label.includes('Deprecated'))))
                     newMappedValues = newMappedValues.filter((fact) => (data.facts[fact[Object.keys(fact)[0]].unit][fact[Object.keys(fact)[0]].longLabel].units[fact[Object.keys(fact)[0]].subUnit]).length > 3)
-
+                    console.log(newMappedValues);
 
                     giveLabels(newMappedValues);
                     //turning array into jsx elements
@@ -209,7 +211,7 @@ export interface CompanyFactsJson {
             clickReaction(label);
             
             let dataArray = data.facts[object.unit][object.longLabel].units[object.subUnit];
-           
+           console.log(dataArray);
             
            return dataArray;
         }
