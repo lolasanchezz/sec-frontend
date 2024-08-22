@@ -196,11 +196,7 @@ export interface CompanyFactsJson {
             let label = object.label;
             
             clickReaction(label);
-            console.log("here");
-            console.log(object.unit)
-            console.log(data.facts[object.unit]);
-            console.log(object.longLabel)
-            //this returns undefined ^^
+            
             let dataArray = data.facts[object.unit][object.longLabel].units[object.subUnit];
            
             

@@ -29,9 +29,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 50%;
+    width: 100%;
     overflow: clip;
-    padding: 5%;
+    
     
 }
 
@@ -51,4 +51,17 @@
 .boxStale {
     font-size: 0.8rem;
     
+}
+
+.rightBar {
+    padding: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.header {
+    font-size: 1rem;
 }

@@ -20,16 +20,24 @@ export default function Home() {
   const [dataStatus, setDataStatus] = useState('loading');
   let [dataSelected, setDataSelected] = useState('' as any);
   let [allLabels, setAllLabels] = useState([] as Array<string>);
- let [company, setCompany] = useState("" as any)
+ let [company, setCompany] = useState("" as any);
+ let [companyName, setCompanyName] = useState("" as any);
   
 
   return (
     <main className={styles.main}>
       <div className = {styles.leftBar}>
-        <CidGrabber setCIK = {setCompany}></CidGrabber>
+        <CidGrabber setCIK = {setCompany} setCompanyName = {setCompanyName}></CidGrabber>
      <ScrollingFacts clickReaction = {setFactClicked} dataSelectedFunc = {setDataSelected} className = {styles.barsContainer} giveLabels = {setAllLabels} dataSelected = {dataSelected} labelsObj = {allLabels} cik = {company}></ScrollingFacts>
      </div>
+     <div className = {styles.rightBar}>
+    <div className = {styles.header}>
+      <h1>{factClicked}</h1>
+    </div>
+
      <Graph factClicked = {factClicked} dataSelected = {dataSelected}></Graph>
+
+     </div>
     </main>
   );
   
