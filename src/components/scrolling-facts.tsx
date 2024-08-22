@@ -1,4 +1,6 @@
 
+
+
 'use client';
 
 import styles from "../app/page.module.css";
@@ -59,11 +61,12 @@ export interface CompanyFactsJson {
         let firstBarsObj : any;
 
         //debugging purposes
-        cik = "0000812011"
+        //cik = "0000812011"
 
 
 
         useEffect(() => {
+            clickReaction("");
             const fetchData = async () => {
                 console.log(cik);
                 if (cik === ""){
@@ -115,7 +118,7 @@ export interface CompanyFactsJson {
                             let subUnit = (Object.keys(data.facts[unit][subLabel].units))[0];
                             let path = `${unit}.${subLabel}.units.${subUnit}.`
 
-
+                            console.log(Label);
                             mappedValues.push({[Label]: {
                                 label: Label,
                                 path: path,
@@ -123,8 +126,9 @@ export interface CompanyFactsJson {
                                 description: description,
                                 subUnit: subUnit,
                                 unit: unit
-                            } 
-                             })
+                            }
+                             });
+                           
 
                         }
                         
@@ -137,6 +141,7 @@ export interface CompanyFactsJson {
 
 
                     //sorting mapped values again..
+                    console.log(mappedValues);
                     let newMappedValues = mappedValues.filter((fact) => (!(fact[Object.keys(fact)[0]].label.includes('Deprecated'))))
                     newMappedValues = newMappedValues.filter((fact) => (data.facts[fact[Object.keys(fact)[0]].unit][fact[Object.keys(fact)[0]].longLabel].units[fact[Object.keys(fact)[0]].subUnit]).length > 3)
 

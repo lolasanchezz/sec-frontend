@@ -11,14 +11,14 @@ const CidGrabber: React.FC<any>  = ({setCIK, setCompanyName}) => {
         //givenTicker.preventDefault();
         setTicker(givenTicker.target.value)
         try {
-        
+            console.log(givenTicker.target.value);
             const response = await fetch('http://localhost:3000/cik/' + givenTicker.target.value);
                     if (!response.ok) {
                         throw new Error('response failed');
                     }
-                    const recievedData = await response.text();
+                    const recievedData = await response.json();
                     const data = recievedData;
-                   console.log(data[1]);
+                   console.log(recievedData);
                    setCompanyName(data[1])
                    setCIK(data[0]);
                    

@@ -28,12 +28,13 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <div className = {styles.leftBar}>
+        
         <CidGrabber setCIK = {setCompany} setCompanyName = {setCompanyName}></CidGrabber>
      <ScrollingFacts clickReaction = {setFactClicked} dataSelectedFunc = {setDataSelected} className = {styles.barsContainer} giveLabels = {setAllLabels} dataSelected = {dataSelected} labelsObj = {allLabels} cik = {company}></ScrollingFacts>
      </div>
      <div className = {styles.rightBar}>
     <div className = {styles.header}>
-      {(companyName) ? <h2>showing{companyName}</h2> : <p></p>}
+      {(companyName) ? <h2 className = {styles.companyName}>showing {companyName.toLowerCase()}</h2> : <p></p>}
     {(form) ? <p> showing {form} form data</p> : <p></p>}
       <h1>{factClicked}</h1>
       
