@@ -142,10 +142,22 @@ export interface CompanyFactsJson {
 
                     //sorting mapped values again..
                     console.log(mappedValues);
-                    let newMappedValues = mappedValues.filter((fact) => (!(fact[Object.keys(fact)[0]].label === null)));
+                     let newMappedValues = mappedValues.filter((fact) => (!(fact[Object.keys(fact)[0]].label === null)));
                     
                     newMappedValues = newMappedValues.filter((fact) => (!(fact[Object.keys(fact)[0]].label.includes('Deprecated'))))
                     newMappedValues = newMappedValues.filter((fact) => (data.facts[fact[Object.keys(fact)[0]].unit][fact[Object.keys(fact)[0]].longLabel].units[fact[Object.keys(fact)[0]].subUnit]).length > 3)
+                   // newMappedValues = newMappedValues.filter((fact) => (data.facts[fact[Object.keys(fact)[0]].unit].units[fact[Object.keys(fact)[0]].subUnit])
+                   //^^ work on this future self
+                   console.log(newMappedValues)
+                   //getting rid of arrays with values that are the same (bad data)
+                let temp = newMappedValues.filter((fact) => {
+                    const values = data.facts[fact[Object.keys(fact)[0]].unit][fact[Object.keys(fact)[0]].longLabel].units[fact[Object.keys(fact)[0]].subUnit].map((element: any) => element.end);
+                    
+                    const uniqueValues = new Set(values);
+                    return values.length === uniqueValues.size;
+                });  
+                 console.log(temp)
+
                     console.log(newMappedValues);
 
                     giveLabels(newMappedValues);
