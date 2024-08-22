@@ -135,8 +135,8 @@ export interface CompanyFactsJson {
 
 
                     //sorting mapped values again..
-                    const newMappedValues = mappedValues.filter((fact) => (!(fact[Object.keys(fact)[0]].label.includes('Deprecated'))))
-
+                    let newMappedValues = mappedValues.filter((fact) => (!(fact[Object.keys(fact)[0]].label.includes('Deprecated'))))
+                    newMappedValues = newMappedValues.filter((fact) => (data.facts[fact[Object.keys(fact)[0]].unit][fact[Object.keys(fact)[0]].longLabel].units[fact[Object.keys(fact)[0]].subUnit]).length > 3)
 
 
                     giveLabels(newMappedValues);
