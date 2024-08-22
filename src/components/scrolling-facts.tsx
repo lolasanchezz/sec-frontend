@@ -48,7 +48,7 @@ export interface CompanyFactsJson {
     description: string
     unit: string
     subUnit: string
-
+    label: string
 }
 
     const ScrollingFacts: React.FC<ScrollingFactsProps> = ({ clickReaction, dataSelected, dataSelectedFunc, giveLabels, labelsObj, cik }) => {
@@ -115,6 +115,7 @@ export interface CompanyFactsJson {
 
 
                             mappedValues.push({[Label]: {
+                                label: Label,
                                 path: path,
                                 longLabel: subLabel,
                                 description: description,
@@ -144,7 +145,8 @@ export interface CompanyFactsJson {
                         onClick={() => {
                             
                              
-                            clickReaction(Object.keys(fact)[0]);
+                            clickReaction((Object.keys(fact)[0]).toString());
+                            console.log(Object.keys(fact)[0])
                             console.log(data)
                             
                             //pass in CIK here 
@@ -191,7 +193,8 @@ export interface CompanyFactsJson {
 
     
         const grabData = (data: any, object: orgData) => {
-            let label = Object.keys(object)[0]
+            let label = object.label;
+            
             clickReaction(label);
             console.log("here");
             console.log(object.unit)

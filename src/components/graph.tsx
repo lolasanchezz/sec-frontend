@@ -38,8 +38,9 @@ const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
             console.log('returned');
              return;
         } else {
-            console.log(dataSelected );
+            
     //start to take data and put it together
+    console.log(factClicked);
     let data: any = [['date filed', factClicked]];
 
     const majorityElementArr : any[] = [];
@@ -48,14 +49,14 @@ const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
         if (!(majorityElementArr.some((element) => Object.keys(element)[0] === dataSelected[i].form))) {
             
             const form = dataSelected[i].form;
-            console.log(majorityElementArr)
+            
             let newObj = {[form] : 0};
             majorityElementArr.push(newObj);
         } else {
             let str = dataSelected[i].form;
             const accessedVar = majorityElementArr.findIndex((obj) => Object.keys(obj)[0] === str);
             const newValue = majorityElementArr[accessedVar][str] + 1; 
-            console.log(newValue)
+            
           majorityElementArr[accessedVar][str] = newValue;
         }
        
@@ -76,14 +77,13 @@ const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
         }
        // let firstDataPoint = ((dataSelected[i].end)).replace(/-/g, "");
        let firstDataPoint = new Date(dataSelected[i].end);
-        console.log((dataSelected[i].end).replace(/-/g, ""))
-        console.log(firstDataPoint)
+       
         data.push([firstDataPoint, dataSelected[i].val]);
     }
     
     setFinalData(data);
     console.log(data);
-    
+    console.log(finalData);
 
 
     }
