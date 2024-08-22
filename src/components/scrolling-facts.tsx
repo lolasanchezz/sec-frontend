@@ -51,6 +51,7 @@ export interface CompanyFactsJson {
     unit: string
     subUnit: string
     label: string
+    form?: string
 }
 
     const ScrollingFacts: React.FC<ScrollingFactsProps> = ({ clickReaction, dataSelected, dataSelectedFunc, giveLabels, labelsObj, cik }) => {
@@ -146,17 +147,62 @@ export interface CompanyFactsJson {
                     
                     newMappedValues = newMappedValues.filter((fact) => (!(fact[Object.keys(fact)[0]].label.includes('Deprecated'))))
                     newMappedValues = newMappedValues.filter((fact) => (data.facts[fact[Object.keys(fact)[0]].unit][fact[Object.keys(fact)[0]].longLabel].units[fact[Object.keys(fact)[0]].subUnit]).length > 3)
+
+                    //now sorting data based on each form
+
+
+                    
+    for (let i = 0; i > newMappedValues.length; i++){
+    const majorityElementArr : any[] = [];
+    let dataArray = data.facts[newMappedValues[i][Object.keys(newMappedValues[i])[0]].unit][newMappedValues[i][Object.keys(newMappedValues[i])[0]].longLabel].units[newMappedValues[i][Object.keys(newMappedValues[i])[0]].longLabel].units[newMappedValues[i][Object.keys(newMappedValues[i])[0]].subUnit]
+    for (let i = 0; i < dataArray.length; i++){
+        
+        if (!(majorityElementArr.some((element) => Object.keys(element)[0] === dataArray[i].form))) {
+            
+            const form = dataArray[i].form;
+            
+            let newObj = {[form] : 0};
+            majorityElementArr.push(newObj);
+        } else {
+            let str = dataArray[i].form;
+            const accessedVar = majorityElementArr.findIndex((obj) => Object.keys(obj)[0] === str);
+            const newValue = majorityElementArr[accessedVar][str] + 1; 
+            
+          majorityElementArr[accessedVar][str] = newValue;
+        }
+       
+    };
+    let majorityElement = '';
+    let majorityElementNumb = 0;
+    majorityElementArr.forEach((element:object) => {
+        if(Object.values(element)[0] > majorityElementNumb) {
+             majorityElement = Object.keys(element)[0];
+             majorityElementNumb = Object.values(element)[0];
+        } 
+    });
+
+    
+
+
+
+
+
+    };
+
+
+
                    // newMappedValues = newMappedValues.filter((fact) => (data.facts[fact[Object.keys(fact)[0]].unit].units[fact[Object.keys(fact)[0]].subUnit])
                    //^^ work on this future self
-                   console.log(newMappedValues)
+                   
                    //getting rid of arrays with values that are the same (bad data)
-                let temp = newMappedValues.filter((fact) => {
-                    const values = data.facts[fact[Object.keys(fact)[0]].unit][fact[Object.keys(fact)[0]].longLabel].units[fact[Object.keys(fact)[0]].subUnit].map((element: any) => element.end);
-                    
+                 let temp = newMappedValues.filter((fact) => {
+                    const values = data.facts[fact[Object.keys(fact)[0]].unit][fact[Object.keys(fact)[0]].longLabel].units[fact[Object.keys(fact)[0]].subUnit].map((element: any) => element.val);
+                    console.log(values)
                     const uniqueValues = new Set(values);
+                    console.log(uniqueValues)
                     return values.length === uniqueValues.size;
                 });  
-                 console.log(temp)
+                 console.log(temp);
 
                     console.log(newMappedValues);
 
