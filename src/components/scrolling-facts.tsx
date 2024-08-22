@@ -134,11 +134,14 @@ export interface CompanyFactsJson {
                     }
 
 
+                    //sorting mapped values again..
+                    const newMappedValues = mappedValues.filter((fact) => (!(fact[Object.keys(fact)[0]].label.includes('Deprecated'))))
 
 
-                    giveLabels(mappedValues);
+
+                    giveLabels(newMappedValues);
                     //turning array into jsx elements
-                     firstBarsObj = (mappedValues.map((fact, index) => (
+                     firstBarsObj = (newMappedValues.map((fact, index) => (
                         
                         <div 
                         key={Object.keys(fact)[0]} 

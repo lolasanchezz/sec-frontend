@@ -2,7 +2,7 @@ import {useState} from 'react';
 
 
 
-const CidGrabber: React.FC<any>  = ({setCIK}) => {
+const CidGrabber: React.FC<any>  = ({setCIK, setCompanyName}) => {
     const [ticker,setTicker] = useState("GOOG");
     
   
