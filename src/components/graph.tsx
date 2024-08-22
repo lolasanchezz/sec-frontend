@@ -8,11 +8,12 @@ import React, { useEffect, useState } from 'react';
 interface GraphProps {
     factClicked: string;
     dataSelected: any;
+    setForm: any;
 };
 
 let data: any = [];
 
-const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
+const Graph: React.FC<GraphProps> = ({factClicked, dataSelected, setForm}) =>{
     const [finalData, setFinalData] = useState([]);
     const [url, setUrl] = useState('');
 
@@ -69,7 +70,7 @@ const Graph: React.FC<GraphProps> = ({factClicked, dataSelected}) =>{
              majorityElementNumb = Object.values(element)[0];
         } 
     });
-
+    setForm(majorityElement);
     console.log(majorityElement, majorityElementNumb);
     for (let i = 0; i < dataSelected.length; i++){
         if(!(dataSelected[i].form === majorityElement)){
