@@ -162,9 +162,9 @@ export interface CompanyFactsJson {
     const majorityElementArr : any[] = [];
     
     let dataArray = data.facts[newMappedValues[j][Object.keys(newMappedValues[j])[0]].unit][newMappedValues[j][Object.keys(newMappedValues[j])[0]].longLabel].units[newMappedValues[j][Object.keys(newMappedValues[j])[0]].subUnit]
-    console.log(dataArray.length);
+    
     for (let e = 0; e < (dataArray.length); e++){
-       console.log(e);
+       
         if (!(majorityElementArr.some((element) => Object.keys(element)[0] === dataArray[e].form))) {
             
             const form = dataArray[e].form;
@@ -178,29 +178,30 @@ export interface CompanyFactsJson {
             
           majorityElementArr[accessedVar][str] = newValue;
         }
-       
+    console.log(majorityElementArr)   
     
     let majorityElement = '';
     let majorityElementNumb = 0;
-    majorityElementArr.forEach((element:object) => {
-        if(Object.values(element)[0] > majorityElementNumb) {
-             majorityElement = Object.keys(element)[0];
-             majorityElementNumb = Object.values(element)[0];
-        } 
-
+    
+    majorityElementNumb = majorityElementArr.reduce((max, obj) => {
+        majorityElement = Object.keys(obj)[0];
+        return obj[Object.keys(obj)[0]] > max ? obj[Object.keys(obj)[0]]: max;
+        //^^ tomorrow me - turn this into an array
     });
-   // if (e === 3) {console.log(dataArray)};
-     dataArray = dataArray.filter((fact: any) => {
-       return fact.form === majorityElement
+    
+    
+  
+     let otherDataArray = dataArray.filter((fact: any) => {
+       return fact.form === Object.keys(majorityElementNumb)
     });
-
-    let set = new Set(dataArray.map((fact: any) => {fact.end}));
+console.log(otherDataArray[0]);
+    let set = new Set(otherDataArray.map((fact: any) => {fact.end}));
     
      //second part - using this new data array to sort other stuff
-     if (!(dataArray.length === (set).size)) {
+     if (!(otherDataArray.length === (set).size)) {
         console.log(newMappedValues[e][Object.keys(newMappedValues[e])[0]].label)
-        console.log(set);
-        console.log(dataArray.length);
+       // console.log(set);
+        console.log(otherDataArray.length);
      };
      
 
