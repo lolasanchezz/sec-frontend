@@ -159,10 +159,10 @@ export interface CompanyFactsJson {
 //that corresponds to the sorted array and remove it completely.
     
     for (let j = 0; j < newMappedValues.length; j++){
-    const majorityElementArr : any[] = [];
+    
     
     let dataArray = data.facts[newMappedValues[j][Object.keys(newMappedValues[j])[0]].unit][newMappedValues[j][Object.keys(newMappedValues[j])[0]].longLabel].units[newMappedValues[j][Object.keys(newMappedValues[j])[0]].subUnit]
-    
+    const majorityElementArr : any[] = [];
     for (let e = 0; e < (dataArray.length); e++){
        
         if (!(majorityElementArr.some((element) => Object.keys(element)[0] === dataArray[e].form))) {
@@ -171,6 +171,7 @@ export interface CompanyFactsJson {
             
             let newObj = {[form] : 0};
             majorityElementArr.push(newObj);
+            console.log(newObj);
         } else {
             let str = dataArray[e].form;
             const accessedVar = majorityElementArr.findIndex((obj) => Object.keys(obj)[0] === str);
@@ -189,30 +190,31 @@ export interface CompanyFactsJson {
        
     });
    
-    
-    console.log(dataArray.length);
+    console.log(majorityElementNumb)
      let otherDataArray = dataArray.filter((fact: any) => {
        
        return fact.form === Object.keys(majorityElementNumb)[0]
     });
     
     let tempSet = new Set();
+    console.log(otherDataArray);
     let otherDataArrayWithoutDupes = otherDataArray.filter((obj: any) => {
-        if (tempSet.has(`${obj.val}${obj.end}`)){
+        
+        if (tempSet.has(`${obj.val}${obj.end}`.toString())){
             return false;
         } else {
-            tempSet.add(`${obj.val}${obj.end}`)
+            tempSet.add(`${obj.val}${obj.end}`.toString())
             return true;
         }
     })
-    console.log(otherDataArrayWithoutDupes);
     let set = new Set(otherDataArrayWithoutDupes.map((fact: any) => fact.end));
-    console.log(set)
+    
      //second part - using this new data array to sort other stuff
-     if ((!(otherDataArray.length === (set).size))){// && (otherDataArray.length < 3)){
-    console.log(newMappedValues[j][Object.keys(newMappedValues[j])[0]].label)
-       //console.log(set);
-       // console.log(otherDataArray.length, set.size);
+     let h = 0
+     console.log(otherDataArrayWithoutDupes);
+     console.log(newMappedValues[j][Object.keys(newMappedValues[j])[0]])
+     if (((!(otherDataArrayWithoutDupes.length === (set).size)))){
+       console.log(newMappedValues[j][Object.keys(newMappedValues[j])[0]])
      };
      
 
