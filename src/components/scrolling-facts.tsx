@@ -178,30 +178,41 @@ export interface CompanyFactsJson {
             
           majorityElementArr[accessedVar][str] = newValue;
         }
-    console.log(majorityElementArr)   
     
+    }
     let majorityElement = '';
     let majorityElementNumb = 0;
     
-    majorityElementNumb = majorityElementArr.reduce((max, obj) => {
-        majorityElement = Object.keys(obj)[0];
-        return obj[Object.keys(obj)[0]] > max ? obj[Object.keys(obj)[0]]: max;
-        //^^ tomorrow me - turn this into an array
+    majorityElementNumb = majorityElementArr.reduce((max, obj: any) => {
+       
+        return (obj[Object.keys(obj)[0]] > max) ? obj: max;
+       
     });
+   
     
-    
-  
+    console.log(dataArray.length);
      let otherDataArray = dataArray.filter((fact: any) => {
-       return fact.form === Object.keys(majorityElementNumb)
+       
+       return fact.form === Object.keys(majorityElementNumb)[0]
     });
-console.log(otherDataArray[0]);
-    let set = new Set(otherDataArray.map((fact: any) => {fact.end}));
     
+    let tempSet = new Set();
+    let otherDataArrayWithoutDupes = otherDataArray.filter((obj: any) => {
+        if (tempSet.has(`${obj.val}${obj.end}`)){
+            return false;
+        } else {
+            tempSet.add(`${obj.val}${obj.end}`)
+            return true;
+        }
+    })
+    console.log(otherDataArrayWithoutDupes);
+    let set = new Set(otherDataArrayWithoutDupes.map((fact: any) => fact.end));
+    console.log(set)
      //second part - using this new data array to sort other stuff
-     if (!(otherDataArray.length === (set).size)) {
-        console.log(newMappedValues[e][Object.keys(newMappedValues[e])[0]].label)
-       // console.log(set);
-        console.log(otherDataArray.length);
+     if ((!(otherDataArray.length === (set).size))){// && (otherDataArray.length < 3)){
+    console.log(newMappedValues[j][Object.keys(newMappedValues[j])[0]].label)
+       //console.log(set);
+       // console.log(otherDataArray.length, set.size);
      };
      
 
@@ -211,7 +222,7 @@ console.log(otherDataArray[0]);
 
 
 
-    };
+    
 
 
 
