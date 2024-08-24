@@ -69,7 +69,7 @@ export interface CompanyFactsJson {
         useEffect(() => {
             clickReaction("");
             const fetchData = async () => {
-                console.log(cik);
+                
                 if (cik === ""){
                     setBars(
                 <div>
@@ -119,7 +119,7 @@ export interface CompanyFactsJson {
                             let subUnit = (Object.keys(data.facts[unit][subLabel].units))[0];
                             let path = `${unit}.${subLabel}.units.${subUnit}.`
 
-                            console.log(data.facts[unit]);
+                            
                             mappedValues.push({[Label]: {
                                 label: Label,
                                 path: path,
@@ -142,36 +142,44 @@ export interface CompanyFactsJson {
 
 
                     //sorting mapped values again..
-                    console.log(mappedValues);
+            
                      let newMappedValues = mappedValues.filter((fact) => (!(fact[Object.keys(fact)[0]].label === null)));
                     
                     newMappedValues = newMappedValues.filter((fact) => (!(fact[Object.keys(fact)[0]].label.includes('Deprecated'))))
-                    newMappedValues = newMappedValues.filter((fact) => (data.facts[fact[Object.keys(fact)[0]].unit][fact[Object.keys(fact)[0]].longLabel].units[fact[Object.keys(fact)[0]].subUnit]).length > 3)
+                 //   newMappedValues = newMappedValues.filter((fact) => (data.facts[fact[Object.keys(fact)[0]].unit][fact[Object.keys(fact)[0]].longLabel].units[fact[Object.keys(fact)[0]].subUnit]).length > 3)
 
                     //now sorting data based on each form
 
-
-                    
-    for (let i = 0; i > newMappedValues.length; i++){
+//within a for loop, i look at the full data array corresponding to my 
+//hashmap that describes each data point and within that for loop i 
+//basically create a copy of the relevant values and first i take out 
+//the elements that aren't from the primary form of that data, and with 
+//that sorted array, i measure whether there are any repetitive values -
+// if that's true, i take the corresponding object within the hashmap 
+//that corresponds to the sorted array and remove it completely.
+    
+    for (let j = 0; j < newMappedValues.length; j++){
     const majorityElementArr : any[] = [];
-    let dataArray = data.facts[newMappedValues[i][Object.keys(newMappedValues[i])[0]].unit][newMappedValues[i][Object.keys(newMappedValues[i])[0]].longLabel].units[newMappedValues[i][Object.keys(newMappedValues[i])[0]].longLabel].units[newMappedValues[i][Object.keys(newMappedValues[i])[0]].subUnit]
-    for (let i = 0; i < dataArray.length; i++){
-        
-        if (!(majorityElementArr.some((element) => Object.keys(element)[0] === dataArray[i].form))) {
+    
+    let dataArray = data.facts[newMappedValues[j][Object.keys(newMappedValues[j])[0]].unit][newMappedValues[j][Object.keys(newMappedValues[j])[0]].longLabel].units[newMappedValues[j][Object.keys(newMappedValues[j])[0]].subUnit]
+    console.log(dataArray.length);
+    for (let e = 0; e < (dataArray.length); e++){
+       console.log(e);
+        if (!(majorityElementArr.some((element) => Object.keys(element)[0] === dataArray[e].form))) {
             
-            const form = dataArray[i].form;
+            const form = dataArray[e].form;
             
             let newObj = {[form] : 0};
             majorityElementArr.push(newObj);
         } else {
-            let str = dataArray[i].form;
+            let str = dataArray[e].form;
             const accessedVar = majorityElementArr.findIndex((obj) => Object.keys(obj)[0] === str);
             const newValue = majorityElementArr[accessedVar][str] + 1; 
             
           majorityElementArr[accessedVar][str] = newValue;
         }
        
-    };
+    
     let majorityElement = '';
     let majorityElementNumb = 0;
     majorityElementArr.forEach((element:object) => {
@@ -179,10 +187,25 @@ export interface CompanyFactsJson {
              majorityElement = Object.keys(element)[0];
              majorityElementNumb = Object.values(element)[0];
         } 
+
+    });
+   // if (e === 3) {console.log(dataArray)};
+     dataArray = dataArray.filter((fact: any) => {
+       return fact.form === majorityElement
     });
 
+    let set = new Set(dataArray.map((fact: any) => {fact.end}));
     
+     //second part - using this new data array to sort other stuff
+     if (!(dataArray.length === (set).size)) {
+        console.log(newMappedValues[e][Object.keys(newMappedValues[e])[0]].label)
+        console.log(set);
+        console.log(dataArray.length);
+     };
+     
 
+    };
+      
 
 
 
@@ -195,16 +218,8 @@ export interface CompanyFactsJson {
                    //^^ work on this future self
                    
                    //getting rid of arrays with values that are the same (bad data)
-                 let temp = newMappedValues.filter((fact) => {
-                    const values = data.facts[fact[Object.keys(fact)[0]].unit][fact[Object.keys(fact)[0]].longLabel].units[fact[Object.keys(fact)[0]].subUnit].map((element: any) => element.val);
-                    console.log(values)
-                    const uniqueValues = new Set(values);
-                    console.log(uniqueValues)
-                    return values.length === uniqueValues.size;
-                });  
-                 console.log(temp);
-
-                    console.log(newMappedValues);
+                 
+                
 
                     giveLabels(newMappedValues);
                     //turning array into jsx elements
@@ -230,7 +245,7 @@ export interface CompanyFactsJson {
                     )));
                     
                     setDataStatus('ready');
-                    
+                };
                    
 
 
@@ -241,14 +256,12 @@ export interface CompanyFactsJson {
                 //DO NOT DELETE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                setBars(firstBarsObj);
 
-                } else {
-                    
-                };
-                
             };
+                
+            
             
     //run the api call
-            
+        
              
 
    
@@ -272,15 +285,13 @@ export interface CompanyFactsJson {
            console.log(dataArray);
             
            return dataArray;
-        }
+        };
     
         return (
             <div className = {styles.barsWrapper}>
                 {bars}
             </div>
-        );
-    };
-
+        )};
 
 
 export default ScrollingFacts;
