@@ -1,8 +1,9 @@
 import {useState} from 'react';
 import styles from "../app/page.module.css";
+import ain from "../pages/main";
 
 const CidGrabber: React.FC<any>  = ({setCIK, setCompanyName}) => {
-    const [ticker,setTicker] = useState("GOOG");
+    const [ticker,setTicker] = useState("");
     
   
     
