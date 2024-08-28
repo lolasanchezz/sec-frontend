@@ -19,17 +19,7 @@ const Graph: React.FC<GraphProps> = ({factClicked, dataSelected, setForm}) =>{
 
     
 
-    const createUrl = () => {
-        const chartContainer = document.getElementById('chartDiv');
-        const chart = (chartContainer as any)._chart
-        if (chart){
-         
-        const imgUri = chart.getImageURI();
-        console.log(imgUri);
-        setUrl(imgUri);
-        window.open(imgUri);
-        }
-    };
+   
 
 
     
@@ -77,6 +67,7 @@ const Graph: React.FC<GraphProps> = ({factClicked, dataSelected, setForm}) =>{
             continue;
         }
        // let firstDataPoint = ((dataSelected[i].end)).replace(/-/g, "");
+       setForm(majorityElement);
        let firstDataPoint = new Date(dataSelected[i].end);
        
         data.push([firstDataPoint, dataSelected[i].val]);
@@ -95,22 +86,29 @@ const Graph: React.FC<GraphProps> = ({factClicked, dataSelected, setForm}) =>{
 return(
 
     <div id = "chartDiv" className = {styles.graph}>
+        <div id = "chartCont">
   {((typeof dataSelected === "undefined")||(factClicked === "")||(dataSelected ==='')||(!(data))) ?  
- <h1>pick a topic!</h1> :
+ <h1></h1> :
   <Chart
    chartType = "LineChart"
     width = "100%"
     height = "100%"
     data = {finalData}
-    /> 
-   
     
-
-   
+    
+    /> 
   }
+  </div>
+
   {((typeof dataSelected === "undefined")||(factClicked === "")||(dataSelected ==='')||(!(data))) ?
   <h1></h1>: 
-   <a onClick = {createUrl} href = {url}>download graph</a>
+   <a onClick = {() => {
+
+    const chartContainer = document.querySelector('#chartCont');
+    console.log("e");
+    
+    console.log(chartContainer);
+   }}>download graph</a>
 }
    </div>
 );

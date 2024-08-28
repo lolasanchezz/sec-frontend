@@ -146,10 +146,10 @@ export interface CompanyFactsJson {
                      let newMappedValues = mappedValues.filter((fact) => (!(fact[Object.keys(fact)[0]].label === null)));
                     
                     newMappedValues = newMappedValues.filter((fact) => (!(fact[Object.keys(fact)[0]].label.includes('Deprecated'))))
-                 //   newMappedValues = newMappedValues.filter((fact) => (data.facts[fact[Object.keys(fact)[0]].unit][fact[Object.keys(fact)[0]].longLabel].units[fact[Object.keys(fact)[0]].subUnit]).length > 3)
+                    newMappedValues = newMappedValues.filter((fact) => (data.facts[fact[Object.keys(fact)[0]].unit][fact[Object.keys(fact)[0]].longLabel].units[fact[Object.keys(fact)[0]].subUnit]).length > 3)
 
                     //now sorting data based on each form
-
+/*
 //within a for loop, i look at the full data array corresponding to my 
 //hashmap that describes each data point and within that for loop i 
 //basically create a copy of the relevant values and first i take out 
@@ -234,7 +234,7 @@ export interface CompanyFactsJson {
                    //getting rid of arrays with values that are the same (bad data)
                  
                 
-
+*/
                     giveLabels(newMappedValues);
                     //turning array into jsx elements
                      firstBarsObj = (newMappedValues.map((fact, index) => (
