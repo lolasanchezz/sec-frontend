@@ -1,22 +1,28 @@
 'use client';
 
 import styles from "../app/page.module.css";
-import { Link } from 'react-router-dom';
-import Main from "./main"
+import {useRouter} from 'next/router'
+import Main from "../app/main/page"
 import {useState} from "react";
 
 const Welcome = () => {
-    const [cik,setCIK] = useState("");
-    const handleInput = (e: any) => {
+    const router = useRouter();
+    let cik = "";
 
+    const handleInput = (e: any) => {
+        if (e.key === 'Enter'){
+        cik = e.target.value;
+        console.log(cik)
+        router.push('/main')
+        }
     }
     return (
         <>
     <div className = {styles.welcomeCenter}>
         <label>
-        <input name = "initCikInput" type = "text" />
+        <input name = "initCikInput" type = "text" onKeyDown = {handleInput}/>
         </label>
-        <Link to = "./main" state = {{"cik": cik}}>go!</Link>
+       
     </div>
     </>
     )

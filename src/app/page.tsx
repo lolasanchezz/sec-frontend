@@ -1,27 +1,27 @@
-
 'use client';
 
-import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Main from "../pages/main";
-import Welcome from "../pages/entry";
+import styles from "../app/page.module.css";
+import { useRouter } from 'next/navigation'
+import graphLogo from './graphLogo.png';
+import Main from "../app/main/page"
+import {useState} from "react";
+import Image from 'next/image'
 
+const Welcome = () => {
+  const router = useRouter();
+    let cik = "";
 
-
-export default function Home() {
-
-  
-  
-
-  return (
-    <BrowserRouter>
-    <Routes>
-      <Route path = "/" element = {<Welcome></Welcome>}></Route>
-      <Route path = "/main" element = {<Main></Main>}></Route>
-      <Route path = "*" element = {<Welcome></Welcome>}></Route>
-    </Routes>
-    </BrowserRouter>
     
-  );
-  
+    return (
+        <>
+    <div className = {styles.welcomeCenter}>
+      <Image sizes = "(max-width: 50%)" className = {styles.image} src = {graphLogo} alt = "logo"></Image>
+      <p className = {styles.desc}>graphing all available data from the sec</p>
+        <button onClick = {() => router.push('/main')}>go!</button>
+       
+    </div>
+    </>
+    )
 }
+
+export default Welcome;
