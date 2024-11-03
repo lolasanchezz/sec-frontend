@@ -2,7 +2,6 @@
 
 import styles from "../app/page.module.css";
 import {useRouter} from 'next/router'
-import Main from "../app/main/page"
 import {useState} from "react";
 
 const Welcome = () => {

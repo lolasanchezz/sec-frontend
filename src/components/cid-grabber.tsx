@@ -20,13 +20,14 @@ const CidGrabber: React.FC<any>  = ({setCIK, setCompanyName, setForm}) => {
                     }
                     const recievedData = await response.json();
                     const data = recievedData;
+                    console.log(data);
                    console.log(recievedData);
                    setCompanyName(data[1])
                    setCIK(data[0]);
                    
                     
         } catch (error){
-            //console.error(error);
+            console.error(error);
             
             setCIK("not found");
         }
