@@ -14,7 +14,7 @@ const CidGrabber: React.FC<any>  = ({setCIK, setCompanyName, setForm}) => {
         setTicker(givenTicker.target.value)
         try {
             setForm("");
-            const response = await fetch('http://localhost:3000/cik/' + givenTicker.target.value);
+            const response = await fetch('api/fetchdata?path=' + 'cik/' + givenTicker.target.value);
                     if (!response.ok) {
                         throw new Error('response failed');
                     }

@@ -89,7 +89,7 @@ export interface CompanyFactsJson {
                     
                     //data fetching (no editing!!)
                     if (!(cik == "not found")) {
-                    const response = await fetch('http://localhost:3000/companyFacts/CIK' + cik);
+                    const response = await fetch('api/fetchdata?path=companyfacts/CIK' + cik);
                     if (!response.ok) {
                         throw new Error('response failed');
                     }
