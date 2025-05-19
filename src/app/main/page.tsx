@@ -5,6 +5,7 @@ import { CompanyFactsJson } from "../../components/scrolling-facts";
 import React, { useEffect, useState } from 'react';
 import Graph from "../../components/graph";
 import CidGrabber from "@/components/cid-grabber";
+import CName from "@/components/cname"
 const Main = ()  => {
   interface objCompanyFacts {
     'object': CompanyFactsJson;
@@ -42,6 +43,8 @@ const Main = ()  => {
  <div className={styles.initContainer}>
  <CidGrabber setCIK={setCompany} setCompanyName={setCompanyName} setForm={setForm}></CidGrabber>
  <h1>enter in a ticker!</h1>
+ <CName setCIK={setCompany} setCompanyName={setCompanyName} setForm={setForm}></CName>
+ <h1>or enter in a company name</h1>
  </div>
   }
       </main>

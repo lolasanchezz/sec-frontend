@@ -1,8 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
  
-type ResponseData = {
-  message: string
-}
+
  //basic default handler that just calls node backend
  /*
 export default async function handler(
@@ -20,10 +18,10 @@ export default async function handler(
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ResponseData>
+  res: NextApiResponse<any>
 ) {
   let rp = req.query.path
- if (rp?.includes("companyFacts")) {
+ if (rp?.includes("companyfacts")) {
     console.log("sending company facts")
     const path = "https://data.sec.gov/api/xbrl/" + rp + ".json"
     const headers = new Headers();
@@ -38,18 +36,18 @@ export default async function handler(
     console.log(path)
     
     console.log("req finished");
-    const tempStr = await response.text(); 
-   //const data = await response.json();
-    console.log(tempStr);
-    res.status(response.status)//.json(data);
+    //const tempStr = await response.json(); 
+   const data = await response.json();
+   // console.log(tempStr);
+    res.status(response.status).json(data);
     
     
     
-  } if (rp?.includes("cik")) {
+  } else if (rp?.includes("cname")) {
     if (typeof rp !== "string") {
     rp = rp[0];
     }
-    rp = rp.substring(rp.indexOf("cik/") + 4)
+    rp = rp.substring(rp.indexOf("cname/") + 5)
     console.log(rp)
     const path = "https://data.sec.gov/api/xbrl/"
     const request = await fetch("https://www.sec.gov/cgi-bin/cik_lookup", {
@@ -70,21 +68,61 @@ export default async function handler(
   },
   "referrer": "https://www.sec.gov/search-filings/cik-lookup",
   "referrerPolicy": "strict-origin-when-cross-origin",
-  "body": "company=" + rp.substring(rp.indexOf("cik/")),
+  "body": "company=" + rp,
   "method": "POST",
   "mode": "cors",
   "credentials": "include"
 });
 //TODO later - write in something checking whether the company lookup has zero hits
 const data = await request.text()
-console.log(data);
-const cik = data.substring(data.indexOf(">0") + 1, data.indexOf("</a"))
-const name = data.substring(data.indexOf("</a>"))
-//console.log(cik) 
-const final = [cik, name].toLocaleString();
- //res.json({"message": final})
+//console.log(data);
+let cik = data.substring(data.indexOf("\">0") +2) // = string with cik at the beginning
+let name = cik.substring(cik.indexOf("</a>") + 4, cik.indexOf("<", cik.indexOf("</a>") + 5)) //just getting the name from the secon
+cik = cik.substring(0, 10)
+name = name.trim()
+console.log(cik+name)
+
+res.send(cik+name);
  
-  } else {
+  } else if (rp?.includes("cik")) {
+
+    const request = await fetch("https://www.sec.gov/files/company_tickers.json", {
+      "headers" : {
+        "user-agent": "lola sanchez, lsanchez@gcschool.org"
+      },
+      method: "GET"
+    })
+
+    const data = await request.json();
+    if (typeof rp !== "string") {
+      rp = rp[0]
+    }
+    rp = rp.substring(4)
+    rp = rp.toUpperCase()
+    let cik = "";
+    let name = "";
+    //unfortunately because the data isn't even sorted, we need to do an incremental search. boooooo
+    for (let i = 0; i < Object.keys(data).length; i++) {
+      if (data[i].ticker === rp) {
+        cik = data[i].cik_str.toString();
+        name = data[i].title
+      } 
+    }
+    
+    while (cik.length < 10) {
+      cik = "0" + cik
+    }
+    console.log(cik, name)
+    if (cik === "") {
+      res.status(404)
+    } else {
+      res.status(200).send(cik+name)
+    }
+
+  } 
+  
+  
+  else {
     const path = `http://localhost:3000/${req.query.path}`
     console.log(path)
     const request = await fetch(path)

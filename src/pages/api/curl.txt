@@ -1,0 +1,45 @@
+curl 'https://www.sec.gov/cgi-bin/cik_lookup' \                     
+  -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'cache-control: max-age=0' \
+  -H 'content-type: application/x-www-form-urlencoded' \
+  -b 'bm_mi=A47E274A985CADD2DDE0D28E6A527DD9~YAAQyGI0F3XT7ciWAQAA2bDB3xu7QJs/QeB/vVn2yNwwrdQZPGotkdCnFNkWF+sta1SwGc2mw3OU8iQkZiG7lHJAfVrbr7l56wIRsaqHbyiLM79M7FMdYzpzSY1VfUDym8jBjQVuhWEw60lti4OwDKKKcC3ukkbv5KexPgwk4LnEXCUDpAh0HzG2xCHTzTci6KQAaAzhN9xo93cmpPRcmYPqrzt+1pcUTRN7X3EfxQdqJ6k8++cSmVNwXz4gIjxh0lh2UhUYkhlzO8M9bSwMqUd5lA0cg0MHXxSnKpXygTGUaKhh66PhpNyjqkp+QYKNyxEhs68Mu/1w0wguk1mF4oCzOw==~1; nmstat=141166ea-d686-104c-4f5f-3bdd2b76d712; ak_bmsc=49E1997399B86A7CB05B323E4DE2A306~000000000000000000000000000000~YAAQyGI0F6PT7ciWAQAA7LPB3xsUuOHF9i0ZpDyalXrku/Mv3Y8qRRHZ4CsBZTqluLfkvGmzl9SFS2D90Fj0VV/BZ0MZcS2hP+C6SSKurmE9NbL+U8U/Ivr47Q3tLULnGlnKY9bd1rxG20KfH+Qso1ekMHRMzS8LYLBTCu2LXr3XBANPlABCjDkMF0I6gVWx2wuas4DVoqIcK2V4kY7KCSuREWbjQmdSMA9e78O2ah5HOvqEfOhzsPLADLAsdnsxgFEWufPwLM1kdMT99w79ihpTy1HIR7DXjYBMVwIfGduVp8HhUExdjY+vR94pWuIyLhnbLTx89GpHBIpi53ZCPX0jjy3WdfOmMyalhqMvwWxSd9mgYnD9Kt1uVxJ3oi35UPbvTiGi09hffND5Sk4KB90/xEZxAazn+L8iTOlsZ9CaOiyhL7S+wgOBtTBru3DyswLJMFWMSdJCxh+bHtj17F/JJI5wzVAnL7MjyrAhX4KOFC+YQHm0o+8bi1yu6y3ODd/3WA==; _gid=GA1.2.1245982532.1747511080; bm_sv=C27164CA79320F488166451ABD2C1422~YAAQyGI0F+9C7siWAQAAN5HH3xvlYAzO/8vfbmqEuCmwxcidPvsuSrz7HMNkah4exWOy/ny281WuA6F+8OyQ6przhwKGNjSMK6yuVnFNalPvZ2PjQI9llbA+4VxFPFb8R1hwa1sU6+KYhcWI0UsxKKz4fvNzS+W8PJk3CfilKm2zvRNPqyDKD13N9uwa0j2fYshUfrbEb9V4AYy11wZqgnUB+ONAE6COZC0IueVrskeSnKosHcq1YpZmtTMcAg==~1; _ga=GA1.1.2614849.1747510736; _ga_300V1CHKH1=GS2.1.s1747510735$o1$g1$t1747511129$j0$l0$h0; _ga_CSLL4ZEK4L=GS2.1.s1747510735$o1$g1$t1747511140$j0$l0$h0; _4c_=%7B%22_4c_s_%22%3A%22lVPBctsgEP2VDGdjA0Yg%2BZpz2mkn02tGgkVirBgNIlbSjP%2B9iyUnHqc9VAcJ3r59LG9X72Tq4EB2XEtdcM4lqyq2Int4G8nunURv8%2BdIdqRiTChpHHVGayqlFrRuqoZKBdop7hyTmqzIa9YqClEqvS2UKE4rYoZF452YYAG1eLXm5ZpRN2JG%2Bo0IFZLheojBvpj0lN6GzJuguRvtHgMWjt7A0%2BRt6jCwlWf6gnbg2y5l3QUeYt7gavIHG6aPNMGY%2FESv0kROa2KYRsip910Mz3DHtwrhgE6Qh9rgMoKDGM%2BULqVh3G020zSt2xDaHtYmPG%2BQNPqUax%2FBYOC4AGjojNEZ%2B%2BUzap8e738i%2Fu0K%2BXH%2F%2FWGBhuy7wEUfTN1nUWzVirzE%2FqaA5azNCHU0HXW%2B94d23Bi%2Fp30I%2B5cBs%2BCQ1YZoc0Vgkg%2BHuSLcP0bfthAfIHUBG4772vrMqPtsZyZGsDD6Np9vs2e426cwfMCnpfU4RpUuRMUKHKOUsNJSSZaf03yh8ySIazZXWrDiK3vuB82mweH%2FUo%2F%2BMrY4p4WpGkeNsRWObcFpoxm%2BhHNbVYrS1UA%2BJbkoVIUDvEjy8qJowV0kS6i30mlFOYOSSi0FrbTaUtYoKLW0zPCa3Fap%2F2JHNnaWvHL36gc6pyHPD2khzjUyjMhS3HARydyLZH2rNcfj9CG1BObrvt4guVvx9tR%2FUE%2BnPw%3D%3D%22%7D' \
+  -H 'dnt: 1' \
+  -H 'origin: https://www.sec.gov' \
+  -H 'priority: u=0, i' \
+  -H 'referer: https://www.sec.gov/search-filings/cik-lookup' \
+  -H 'sec-ch-ua: "Not.A/Brand";v="99", "Chromium";v="136"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "macOS"' \
+  -H 'sec-fetch-dest: document' \
+  -H 'sec-fetch-mode: navigate' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'sec-fetch-user: ?1' \
+  -H 'upgrade-insecure-requests: 1' \
+  -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36' \
+  --data-raw 'company=vail'
+
+
+fetch("https://www.sec.gov/cgi-bin/cik_lookup", {
+  "headers": {
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "accept-language": "en-US,en;q=0.9",
+    "cache-control": "max-age=0",
+    "content-type": "application/x-www-form-urlencoded",
+    "priority": "u=0, i",
+    "sec-ch-ua": "\"Not.A/Brand\";v=\"99\", \"Chromium\";v=\"136\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"macOS\"",
+    "sec-fetch-dest": "document",
+    "sec-fetch-mode": "navigate",
+    "sec-fetch-site": "same-origin",
+    "sec-fetch-user": "?1",
+    "upgrade-insecure-requests": "1"
+  },
+  "referrer": "https://www.sec.gov/search-filings/cik-lookup",
+  "referrerPolicy": "strict-origin-when-cross-origin",
+  "body": "company=vail",
+  "method": "POST",
+  "mode": "cors",
+  "credentials": "include"
+});
