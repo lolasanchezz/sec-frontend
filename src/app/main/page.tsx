@@ -26,7 +26,10 @@ const Main = ()  => {
     {(!(company == "")) ?  
     <>
         <div className={styles.leftBar}>
-          <CidGrabber setCIK={setCompany} setCompanyName={setCompanyName} setForm={setForm}></CidGrabber>
+          <div className={styles.tpSearchBar}>
+            <CidGrabber setCIK={setCompany} setCompanyName={setCompanyName} setForm={setForm}></CidGrabber>
+           <CName setCIK={setCompany} setCompanyName={setCompanyName} setForm={setForm}></CName>
+          </div>
           <ScrollingFacts clickReaction={setFactClicked} dataSelectedFunc={setDataSelected} className={styles.barsContainer} giveLabels={setAllLabels} dataSelected={dataSelected} labelsObj={allLabels} cik={company}></ScrollingFacts>
         </div>
       

@@ -37,9 +37,15 @@ export default async function handler(
     
     console.log("req finished");
     //const tempStr = await response.json(); 
+    try {
    const data = await response.json();
-   // console.log(tempStr);
     res.status(response.status).json(data);
+    } catch (err) {
+      console.log(err)
+      res.status(501).send("")
+    }
+   // console.log(tempStr);
+   
     
     
     
@@ -114,7 +120,7 @@ res.send(cik+name);
     }
     console.log(cik, name)
     if (cik === "") {
-      res.status(404)
+      res.status(404).send("not found")
     } else {
       res.status(200).send(cik+name)
     }

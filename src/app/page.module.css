@@ -116,3 +116,9 @@
     font-style:italic;
     padding: 5%;
 }
+
+
+.tpSearchBar {
+    display: flex;
+    flex-direction: row;
+}

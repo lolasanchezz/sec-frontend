@@ -88,10 +88,19 @@ export interface CompanyFactsJson {
                 
                     
                     //data fetching (no editing!!)
-                    if (!(cik == "not found")) {
+                    if ((cik !== "not found")) {
                     const response = await fetch('api/fetchdata?path=companyfacts/CIK' + cik);
                     if (!response.ok) {
+                        if (response.status == 501) {
+                            setBars(
+                                <div>
+                                    <h2>company entered gave a non-public company.</h2>
+                                    <p>try being more specific with the company name</p>
+                                </div>
+                            )
+                        }
                         throw new Error('response failed');
+
                     }
 
                     const data = await response.json();
